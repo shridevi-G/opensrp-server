@@ -220,6 +220,72 @@ public class FormDatahandler {
         }
 
     }
+    
+    public void ancVisit(JSONObject dataObject, String visittype, String anmnumber) throws JSONException {
+        logger.info("anc_visit");
+        String ecId = "";
+        String newdate = "";
+        String visittime = "";
+        Integer visitno = null;
+        Integer visitti = null;
+
+        JSONArray fieldJsonArray = dataObject
+                .getJSONObject("formInstance")
+                .getJSONObject("form").getJSONArray("fields");
+
+        for (int i = 0; i < fieldJsonArray.length(); i++) {
+
+            JSONObject jsonObject = fieldJsonArray
+                    .getJSONObject(i);
+            if ((jsonObject.has("name"))
+                    && jsonObject.getString("name").equals("ecId")) {
+
+                ecId = (jsonObject.has("value") && jsonObject
+                        .getString("value") != null) ? jsonObject
+                        .getString("value") : "";
+            }
+        }
+        logger.info("entityid" + ecId);
+        List ancvisitdetails = visitService.getVisitDue(ecId);
+        List visitconf = visitService.getVisitconf();
+        logger.info("ancvisitpastdetails^^^^" + ancvisitdetails);
+        String datetime = collect(ancvisitdetails, on(ANCVisitDue.class).lmpdate()).get(0).toString();
+        String visit = collect(ancvisitdetails, on(ANCVisitDue.class).visitno()).get(0).toString();
+        int visitnum = Integer.parseInt(visit);
+        if (visitnum == 1) {
+            visittime = collect(visitconf, on(VisitConf.class).anc_visit2_from_week()).get(0).toString();
+            visitti = Integer.parseInt(visittime) * 7;
+            newdate = dateUtil.dateFormat(datetime, visitti);
+            visitno = 2;
+        }
+        if (visitnum == 2) {
+            visittime = collect(visitconf, on(VisitConf.class).anc_visit3_from_week()).get(0).toString();
+            logger.info("visit time interval:" + visittime);
+            visitti = Integer.parseInt(visittime) * 7;
+            newdate = dateUtil.dateFormat(datetime, visitti);
+            visitno = 3;
+        }
+        if (visitnum == 3) {
+            visittime = collect(visitconf, on(VisitConf.class).anc_visit4_from_week()).get(0).toString();
+            logger.info("visit time interval:" + visittime);
+            visitti = Integer.parseInt(visittime) * 7;
+            logger.info("visit time converted interval:" + visitti);
+            newdate = dateUtil.dateFormat(datetime, visitti);
+            logger.info("visit time converted time:" + newdate);
+            visitno = 4;
+        }
+        if (visitnum == 4) {
+            newdate = "";
+            logger.info("visit time converted time:" + newdate);
+            visitno = 5;
+        }
+        logger.info("new date" + newdate);
+        String sid = collect(ancvisitdetails, on(ANCVisitDue.class).id()).get(0).toString();
+        logger.info("id from db:" + sid);
+        int id = Integer.parseInt(sid);
+        logger.info("id from db:" + id);
+        ancVisitRepository.ancUpdate(id, newdate, visitno);
+    }
 
     public void pncRegistration(JSONObject dataObject, String visittype, String anmNumber) throws JSONException {
         String edd = "";

@@ -115,6 +115,12 @@ public class FormDataController {
                 formDataHandler.pncRegistration(dataObject, visittype, phoneNumber);
 
             }
+            if (visittype.equalsIgnoreCase("anc_visit")) {
+                
+                formDataHandler.ancVisit(dataObject, visittype, anmphoneNumber);
+
+            }
+            
 
         }
     }

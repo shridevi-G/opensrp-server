@@ -59,4 +59,11 @@ public class ANCVisitRepository {
 
     }
 
+    @Transactional("service_provided")
+    public void ancUpdate(Integer id, String newdate, Integer visitno) {
+        logger.info("******ancvisitrepository invoked**");
+        servicesProvidedRepository.ancvisitupdate(id, newdate, visitno);
+
+    }
+
 }

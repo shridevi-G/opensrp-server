@@ -87,4 +87,13 @@ public class AllServicesProvidedRepository {
         logger.info(" visit date: " + objectToUpdate);
         logger.info(" visit date2: ");
     }
+    public void ancvisitupdate(Integer id,String newdate,Integer visitno) {	
+   	
+   	ANCVisitDue objectToUpdate = (ANCVisitDue) dataAccessTemplate.get(ANCVisitDue.class, id);
+   	objectToUpdate.setvisitdate(newdate);
+   	objectToUpdate.setvisitno(visitno);
+   	dataAccessTemplate.saveOrUpdate(objectToUpdate);
+   	logger.info(" visit date: "+objectToUpdate);
+  	logger.info(" visit date2: ");
+    }
 }
