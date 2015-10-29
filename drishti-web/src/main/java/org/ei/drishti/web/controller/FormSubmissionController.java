@@ -7,6 +7,9 @@ import static ch.lambdaj.collection.LambdaCollections.with;
 import static ch.lambdaj.collection.LambdaCollections.with;
 import static ch.lambdaj.collection.LambdaCollections.with;
 import static ch.lambdaj.collection.LambdaCollections.with;
+import static ch.lambdaj.collection.LambdaCollections.with;
+import static ch.lambdaj.collection.LambdaCollections.with;
+import static ch.lambdaj.collection.LambdaCollections.with;
 
 import static ch.lambdaj.collection.LambdaCollections.with;
 import ch.lambdaj.function.convert.Converter;
@@ -14,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.text.MessageFormat;
 import static java.text.MessageFormat.format;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +30,8 @@ import org.ei.drishti.event.FormSubmissionEvent;
 import org.ei.drishti.form.domain.FormSubmission;
 import org.ei.drishti.form.service.FormSubmissionConverter;
 import org.ei.drishti.form.service.FormSubmissionService;
+import org.ei.drishti.web.handler.FormsubmissionHandler;
+import org.json.JSONException;
 import org.motechproject.scheduler.gateway.OutboundEventGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,16 +56,18 @@ public class FormSubmissionController {
     private HttpAgent httpAgent;
     private final String drishtiANMVillagesURL;
     private OutboundEventGateway gateway;
+    private FormsubmissionHandler drishtiform;
 
     @Autowired
     public FormSubmissionController(@Value("#{drishti['drishti.anm.village.url']}") String drishtiANMVillagesURL,
-            HttpAgent httpAgent,
+            HttpAgent httpAgent,FormsubmissionHandler drishtiform,
             FormSubmissionService formSubmissionService,
             OutboundEventGateway gateway) {
         this.formSubmissionService = formSubmissionService;
         this.gateway = gateway;
         this.drishtiANMVillagesURL = drishtiANMVillagesURL;
         this.httpAgent=httpAgent;
+        this.drishtiform = drishtiform;
 
     }
 //    @RequestMapping(method = GET, value = "/form-submissions")
@@ -145,17 +153,28 @@ public class FormSubmissionController {
         });
     }
 
-    @RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/form-submissions")
-    public ResponseEntity<HttpStatus> submitForms(@RequestBody List<FormSubmissionDTO> formSubmissionsDTO) {
+  @RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/form-submissions")
+    public ResponseEntity<HttpStatus> submitForms(
+            @RequestBody List<FormSubmissionDTO> formSubmissionsDTO) {
+
         try {
             if (formSubmissionsDTO.isEmpty()) {
                 return new ResponseEntity<>(BAD_REQUEST);
             }
+            logger.info("*****" + formSubmissionsDTO.size() + " : -----------");
 
-            gateway.sendEventMessage(new FormSubmissionEvent(formSubmissionsDTO).toEvent());
-            logger.debug(format("Added Form submissions to queue.\nSubmissions: {0}", formSubmissionsDTO));
-        } catch (Exception e) {
-            logger.error(format("Form submissions processing failed with exception {0}.\nSubmissions: {1}", e, formSubmissionsDTO));
+            logger.info("** transfer data to handler*******");
+            drishtiform.formData(formSubmissionsDTO);
+
+            gateway.sendEventMessage(new FormSubmissionEvent(formSubmissionsDTO)
+                    .toEvent());
+            logger.debug(format(
+                    "Added Form submissions to queue.\nSubmissions: {0}",
+                    formSubmissionsDTO));
+        } catch (JSONException | ParseException e) {
+            logger.error(format(
+                    "Form submissions processing failed with exception {0}.\nSubmissions: {1}",
+                    e, formSubmissionsDTO));
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(CREATED);
