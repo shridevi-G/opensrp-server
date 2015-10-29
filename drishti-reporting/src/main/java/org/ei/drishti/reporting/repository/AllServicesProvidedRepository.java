@@ -69,4 +69,22 @@ public class AllServicesProvidedRepository {
         dataAccessTemplate.save(new ANCVisitDue(entityid, patientnum, anmnum, visittype, visitno, lmpdate, womenname, visitdate, anmid));
 
     }
+
+    public void ecupdate(Integer id, String phoneNumber) {
+
+        EcRegDetails objectToUpdate = (EcRegDetails) dataAccessTemplate.get(EcRegDetails.class, id);
+        objectToUpdate.setphonenumber(phoneNumber);
+        dataAccessTemplate.saveOrUpdate(objectToUpdate);
+        logger.info(" visit date: " + objectToUpdate);
+        logger.info(" visit date2: ");
+    }
+
+    public void ancupdate(Integer id, String phonenumber) {
+
+        ANCVisitDue objectToUpdate = (ANCVisitDue) dataAccessTemplate.get(ANCVisitDue.class, id);
+        objectToUpdate.setpatientnum(phonenumber);
+        dataAccessTemplate.saveOrUpdate(objectToUpdate);
+        logger.info(" visit date: " + objectToUpdate);
+        logger.info(" visit date2: ");
+    }
 }

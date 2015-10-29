@@ -71,10 +71,22 @@ public class FormDataController {
             String user_id = dataObject.getString("anmId");
             anmphoneNumber = anmService.getanmPhoneNumber(user_id).get(0).toString();
             logger.info("value of anmphonenumber from db:" + anmphoneNumber);
-            
+
             if (visittype.equalsIgnoreCase("ec_registration")) {
                 logger.info("visit type" + visittype);
                 formDataHandler.ecRegistration(dataObject, anmphoneNumber);
+
+            }
+            if (visittype.equalsIgnoreCase("ec_edit")) {
+                logger.info("visit type" + visittype);
+
+                formDataHandler.ecEdit(dataObject, anmphoneNumber);
+
+            }
+            if (visittype.equalsIgnoreCase("anc_reg_edit_oa")) {
+                logger.info("visit type" + visittype);
+
+                formDataHandler.ancEdit(dataObject, anmphoneNumber);
 
             }
 

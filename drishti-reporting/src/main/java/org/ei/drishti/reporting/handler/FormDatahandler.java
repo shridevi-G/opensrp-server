@@ -43,7 +43,7 @@ public class FormDatahandler {
     String phoneNumber = "";
 
     @Autowired
-    public void FormDataHandler(DateUtil dateUtil,ANCVisitRepository ancVisitRepository, ANMService anmService, SMSController smsController, VisitService visitService) {
+    public void FormDataHandler(DateUtil dateUtil, ANCVisitRepository ancVisitRepository, ANMService anmService, SMSController smsController, VisitService visitService) {
         this.ancVisitRepository = ancVisitRepository;
         this.smsController = smsController;
         this.anmService = anmService;
@@ -85,6 +85,68 @@ public class FormDatahandler {
         logger.info("invoke sms controller******" + phoneNumber);
         smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "EC");
         ancVisitRepository.ecinsert(entityId, phoneNumber);
+    }
+
+    public void ecEdit(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
+        String entityId = dataObject.getString("entityId");
+        logger.info("ecedit method");
+        JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
+        for (int i = 0; i < fieldJsonArray.length(); i++) {
+            JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
+
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("phoneNumber")) {
+                phoneNumber = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                        .getString("value") : "";
+            }
+
+        }
+        List ancregdetails = anmService.getPhoneNumber(entityId);
+        String sid = collect(ancregdetails, on(EcRegDetails.class).id()).get(0).toString();
+        String ptphoneNumber = collect(ancregdetails, on(EcRegDetails.class).phonenumber()).get(0).toString();
+        int id = Integer.parseInt(sid);
+        logger.info("id from db:" + id);
+        if (!phoneNumber.equalsIgnoreCase(ptphoneNumber)) {
+
+            ancVisitRepository.ecUpdate(id, phoneNumber);
+            logger.info("update completed");
+        }
+    }
+
+    public void ancEdit(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
+        String entityId = dataObject.getString("entityId");
+        String ecId = "";
+        logger.info("ancedit method");
+        JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
+        for (int i = 0; i < fieldJsonArray.length(); i++) {
+            JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
+
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("phoneNumber")) {
+                phoneNumber = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                        .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("ecId")) {
+
+                ecId = (jsonObject.has("value") && jsonObject
+                        .getString("value") != null) ? jsonObject
+                        .getString("value") : "";
+            }
+
+        }
+        List ancregdetails = visitService.getVisitDue(entityId);
+        String sid = collect(ancregdetails, on(ANCVisitDue.class).id()).get(0).toString();
+        String ptphoneNumber = collect(ancregdetails, on(ANCVisitDue.class).patientnum()).get(0).toString();
+        int id = Integer.parseInt(sid);
+        logger.info("id from db:" + id);
+        if (!phoneNumber.equalsIgnoreCase(ptphoneNumber)) {
+
+            ancVisitRepository.ancregUpdate(id, phoneNumber);
+            logger.info("update completed");
+        }
     }
 
     public void ancRegistration(JSONObject dataObject, String visittype, String anmNumber) throws JSONException {
@@ -216,7 +278,7 @@ public class FormDatahandler {
 
             }
         }
-         if (visittype.equalsIgnoreCase("delivery_outcome")) {
+        if (visittype.equalsIgnoreCase("delivery_outcome")) {
 
             List ancvisitdetails = visitService.getVisitDue(ecId);
             String womenName = collect(ancvisitdetails, on(ANCVisitDue.class).womenName()).get(0).toString();
@@ -293,7 +355,7 @@ public class FormDatahandler {
             String ptphoneNumber = collect(ancvisitdetails, on(EcRegDetails.class).phonenumber()).get(0).toString();
             logger.info("phonenumber: " + ptphoneNumber);
             smsController.sendSMSChild(ptphoneNumber, wifeName);
-            
+
         }
 
     }

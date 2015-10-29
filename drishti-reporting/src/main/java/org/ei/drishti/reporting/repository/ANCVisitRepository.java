@@ -45,4 +45,18 @@ public class ANCVisitRepository {
 
     }
 
+    @Transactional("service_provided")
+    public void ecUpdate(Integer id, String phoneNumber) {
+        logger.info("******ancvisitrepository invoked**");
+        servicesProvidedRepository.ecupdate(id, phoneNumber);
+
+    }
+
+    @Transactional("service_provided")
+    public void ancregUpdate(Integer id, String phoneNumber) {
+        logger.info("******ancvisitrepository invoked**");
+        servicesProvidedRepository.ancupdate(id, phoneNumber);
+
+    }
+
 }
