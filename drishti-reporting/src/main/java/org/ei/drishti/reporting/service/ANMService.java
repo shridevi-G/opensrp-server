@@ -48,4 +48,8 @@ public class ANMService {
     public List<SP_ANM> anmsInTheSamePHC(String anmIdentifier) {
         return allANMsRepository.fetchAllANMSInSamePHC(anmIdentifier);
     }
+    @Transactional("service_provided")
+    public List getANMVillages(String anmIdentifier) {
+        return allLocationsRepository.fetchANMVillages(anmIdentifier);
+    }
 }

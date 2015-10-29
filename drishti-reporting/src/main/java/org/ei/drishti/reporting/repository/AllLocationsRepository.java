@@ -4,6 +4,7 @@ import org.ei.drishti.reporting.domain.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.ei.drishti.reporting.domain.ANMVillages;
 
 import java.util.List;
 
@@ -38,4 +39,10 @@ public class AllLocationsRepository {
         return dataAccessTemplate.findByNamedQueryAndNamedParam(Location.FIND_VILLAGES_BY_PHC_AND_SUBCENTER,
                 new String[]{"phcIdentifier", "subCenter"}, new Object[]{location.phc().phcIdentifier(), location.subCenter()});
     }
+    public List fetchANMVillages(String anmIdentifier) {
+        String user_id=anmIdentifier;
+        return dataAccessTemplate.findByNamedQueryAndNamedParam(ANMVillages.FIND_BY_USER_ID,
+                new String[]{"user_id"}, new Object[]{user_id});
+    }
 }
+
