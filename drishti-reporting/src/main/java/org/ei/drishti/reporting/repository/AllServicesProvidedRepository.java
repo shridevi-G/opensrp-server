@@ -8,10 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Repository
-public class  AllServicesProvidedRepository {
+public class AllServicesProvidedRepository {
+
     private DataAccessTemplate dataAccessTemplate;
+    private static Logger logger = LoggerFactory
+            .getLogger(AllServicesProvidedRepository.class.toString());
 
     protected AllServicesProvidedRepository() {
     }
@@ -51,5 +56,17 @@ public class  AllServicesProvidedRepository {
 
     public void deleteReportsFor(String dristhiEntityId) {
         dataAccessTemplate.deleteAll(getAllReportsForDristhiEntityID(dristhiEntityId));
+    }
+
+    public void ecsave(String entityid, String phonenumber) {
+        logger.info("####### ecsave method invoked$$$$$");
+        dataAccessTemplate.save(new EcRegDetails(entityid, phonenumber));
+
+    }
+
+    public void ancsave(String entityid, String patientnum, String anmnum, String visittype, Integer visitno, String lmpdate, String womenname, String visitdate, String anmid) {
+        logger.info("####### ancsave method invoked$$$$$");
+        dataAccessTemplate.save(new ANCVisitDue(entityid, patientnum, anmnum, visittype, visitno, lmpdate, womenname, visitdate, anmid));
+
     }
 }
