@@ -116,11 +116,13 @@ public class FormDataController {
 
             }
             if (visittype.equalsIgnoreCase("anc_visit")) {
-                
+                formDataHandler.visitpoc(dataObject, visittype, phoneNumber);
                 formDataHandler.ancVisit(dataObject, visittype, anmphoneNumber);
 
             }
-            
+            if (visittype.equalsIgnoreCase("pnc_visit") || visittype.equalsIgnoreCase("child_illness")) {
+                formDataHandler.visitpoc(dataObject, visittype, phoneNumber);
+            }
 
         }
     }

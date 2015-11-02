@@ -13,9 +13,10 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class DateUtil {
+
     private static DateUtility dateUtility = new RealDate();
-     private static Logger logger = LoggerFactory
-			.getLogger(DateUtil.class.toString());
+    private static Logger logger = LoggerFactory
+            .getLogger(DateUtil.class.toString());
 
     public static void fakeIt(LocalDate fakeDayAsToday) {
         dateUtility = new MockDate(fakeDayAsToday);
@@ -44,28 +45,38 @@ public class DateUtil {
             return defaultValue;
         }
     }
-    public String dateFormat(String datetime,int diff) {
-		logger.info("converting date format");
-		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
-		// Parsing the date
-		DateTime jodatime = dtf.parseDateTime(datetime);
-		logger.info("date time format"+jodatime);
-		// Format for output
-		DateTimeFormatter dtfOut = DateTimeFormat.forPattern("yyyy-MM-dd");
-		// Printing the date
-		String date=dtfOut.print(jodatime.plusDays(diff));
-		logger.info("converted date"+date);
-    	return date;
-	}
+
+    public String datetimenow() {
+        DateTime date = DateTime.now();
+        DateTimeFormatter dtf = DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss.SSSZ");
+        String date1 = dtf.print(date);
+        return "date1";
+    }
+
+    public String dateFormat(String datetime, int diff) {
+        logger.info("converting date format");
+        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
+        // Parsing the date
+        DateTime jodatime = dtf.parseDateTime(datetime);
+        logger.info("date time format" + jodatime);
+        // Format for output
+        DateTimeFormatter dtfOut = DateTimeFormat.forPattern("yyyy-MM-dd");
+        // Printing the date
+        String date = dtfOut.print(jodatime.plusDays(diff));
+        logger.info("converted date" + date);
+        return date;
+    }
 }
 
 interface DateUtility {
+
     LocalDate today();
 
     long millis();
 }
 
 class RealDate implements DateUtility {
+
     @Override
     public LocalDate today() {
         return LocalDate.now();
@@ -78,6 +89,7 @@ class RealDate implements DateUtility {
 }
 
 class MockDate implements DateUtility {
+
     private DateTime fakeDay;
 
     MockDate(LocalDate fakeDay) {
@@ -94,4 +106,3 @@ class MockDate implements DateUtility {
         return fakeDay.getMillis();
     }
 }
-

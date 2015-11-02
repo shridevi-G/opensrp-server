@@ -66,4 +66,12 @@ public class ANCVisitRepository {
 
     }
 
+    @Transactional("service_provided")
+    public void pocinsert(String visittype, String visitentityid, String entityidEC, String anmid, String phc, String timestamp, String wifename) {
+
+        logger.info("******ancvisitrepository**");
+        servicesProvidedRepository.pocsave(visittype, visitentityid, entityidEC, anmid, phc, timestamp, wifename);
+
+    }
+
 }

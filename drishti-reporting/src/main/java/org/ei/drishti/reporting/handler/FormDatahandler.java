@@ -7,16 +7,19 @@ package org.ei.drishti.reporting.handler;
 
 import static ch.lambdaj.Lambda.collect;
 import static ch.lambdaj.Lambda.collect;
+import static ch.lambdaj.Lambda.collect;
 import static ch.lambdaj.Lambda.on;
 import java.util.List;
+import org.ei.drishti.common.util.DateUtil;
 import org.ei.drishti.reporting.controller.SMSController;
-
+import org.ei.drishti.reporting.domain.ANCVisitDue;
 import org.ei.drishti.reporting.domain.ANMVillages;
-import org.ei.drishti.reporting.domain.VisitConf;
-
 import org.ei.drishti.reporting.domain.EcRegDetails;
+import org.ei.drishti.reporting.domain.HealthCenter;
+import org.ei.drishti.reporting.domain.VisitConf;
 import org.ei.drishti.reporting.repository.ANCVisitRepository;
 import org.ei.drishti.reporting.service.ANMService;
+import org.ei.drishti.reporting.service.VisitService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,9 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.ei.drishti.reporting.service.VisitService;
-import org.ei.drishti.common.util.DateUtil;
-import org.ei.drishti.reporting.domain.ANCVisitDue;
 
 @Component
 public class FormDatahandler {
@@ -217,10 +217,11 @@ public class FormDatahandler {
             logger.info("trying to send sms");
             smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "ANC");
             logger.info("sms sent done");
+            ancVisitRepository.insert(entityId, phoneNumber, anmNumber, "anc_visit", visitnumber, edd, wifeName, visitdate, anmid);
         }
 
     }
-    
+
     public void ancVisit(JSONObject dataObject, String visittype, String anmnumber) throws JSONException {
         logger.info("anc_visit");
         String ecId = "";
@@ -359,6 +360,70 @@ public class FormDatahandler {
         }
     }
 
+    public void visitpoc(JSONObject dataObject, String visittype, String anmNumber) throws JSONException {
+        String entityidEC = "";
+        String motherName = "";
+        JSONArray fieldsJsonArray = dataObject.getJSONObject("formInstance")
+                .getJSONObject("form").getJSONArray("fields");
+        String visitentityid = dataObject.getString("entityId");
+        String anmid = dataObject.getString("anmId");
+        for (int i = 0; i < fieldsJsonArray.length(); i++) {
+            JSONObject jsonObject = fieldsJsonArray.getJSONObject(i);
+            if ((jsonObject.has("name")) && jsonObject.getString("name").equals("ecId")) {
+                entityidEC = (jsonObject.has("value") && jsonObject
+                        .getString("value") != null) ? jsonObject
+                        .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("wifeName")) {
+
+                wifeName = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                        .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("motherName")) {
+
+                motherName = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                        .getString("value") : "";
+            }
+            if ((jsonObject.has("name")) && jsonObject.getString("name").equals("isConsultDoctor")) {
+                String isCon = (jsonObject.has("value") && jsonObject
+                        .getString("value") != null) ? jsonObject
+                        .getString("value") : "";
+                logger.info("res1+++++" + isCon);
+                if (isCon.equalsIgnoreCase("yes")) {
+
+                    logger.info("anmid+++++" + anmid);
+                    List subcenterForANM = anmService.getANMVillages(anmid);
+                    String sid = collect(subcenterForANM, on(ANMVillages.class).subcenter()).get(0).toString();
+                    logger.info("subcenter from db:" + sid);
+                    Integer id = Integer.parseInt(sid);
+                    List phcdetails = anmService.getPHCDetails(id);
+                    String phcname = collect(phcdetails, on(HealthCenter.class).parent_hospital()).get(0).toString();
+                    logger.info("phc name from healthcenters" + phcname);
+                    String hospitaltype = collect(phcdetails, on(HealthCenter.class).hospital_type()).get(0).toString();
+                    String date = dateUtil.datetimenow();
+                    logger.info("date time converted" + date);
+
+                    if (hospitaltype.equalsIgnoreCase("Subcenter")) {
+                        if (visittype.equalsIgnoreCase("child_illness")) {
+                            ancVisitRepository.pocinsert(visittype, visitentityid, entityidEC, anmid, phcname, date, motherName);
+                        }
+                        if (visittype.equalsIgnoreCase("anc_visit") || visittype.equalsIgnoreCase("pnc_visit")) {
+                            ancVisitRepository.pocinsert(visittype, visitentityid, entityidEC, anmid, phcname, date, wifeName);
+                        }
+
+                    }
+
+                    logger.info("invoking a service method");
+
+                }
+            }
+        }
+    }
+
     public void childRegistration(JSONObject dataObject, String visittype, String anmNumber) throws JSONException {
         String edd = "2015-09-09";
         String ecNumber = "";
@@ -375,7 +440,7 @@ public class FormDatahandler {
         for (int i = 0; i < fieldJsonArray.length(); ++i) {
             JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
 
-            if (jsonObject.has("name") && jsonObject.getString("name").equals("phoneNumber")) {;
+            if (jsonObject.has("name") && jsonObject.getString("name").equals("phoneNumber")) {
                 phoneNumber = jsonObject.has("value") && jsonObject
                         .getString("value") != null ? jsonObject
                         .getString("value") : "";
@@ -414,6 +479,7 @@ public class FormDatahandler {
         if (visittype.equalsIgnoreCase("child_registration_oa")) {
             logger.info("visittype: child_registration_oa");
             smsController.sendSMSChild(phoneNumber, motherName);
+            ancVisitRepository.insert(entityId, phoneNumber, anmNumber, "child_Immunization", visitnumber, dateOfBirth, motherName, edd, anmid);
         }
         if (visittype.equalsIgnoreCase("child_registration_ec")) {
             List ancvisitdetails = anmService.getPhoneNumber(entityId);
@@ -421,6 +487,7 @@ public class FormDatahandler {
             String ptphoneNumber = collect(ancvisitdetails, on(EcRegDetails.class).phonenumber()).get(0).toString();
             logger.info("phonenumber: " + ptphoneNumber);
             smsController.sendSMSChild(ptphoneNumber, wifeName);
+            ancVisitRepository.insert(childId, ptphoneNumber, anmNumber, "child_Immunization", visitnumber, dateOfBirth, wifeName, edd, anmid);
 
         }
 
