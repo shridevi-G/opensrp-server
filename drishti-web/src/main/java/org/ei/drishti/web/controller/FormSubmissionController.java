@@ -53,19 +53,19 @@ public class FormSubmissionController {
     private final String drishtiANMVillagesURL;
     private OutboundEventGateway gateway;
     private FormsubmissionHandler drishtiform;
-    
+
     @Autowired
     private MultimediaService multimediaService;
 
     @Autowired
     public FormSubmissionController(@Value("#{drishti['drishti.anm.village.url']}") String drishtiANMVillagesURL,
-            HttpAgent httpAgent,FormsubmissionHandler drishtiform,
+            HttpAgent httpAgent, FormsubmissionHandler drishtiform,
             FormSubmissionService formSubmissionService,
             OutboundEventGateway gateway) {
         this.formSubmissionService = formSubmissionService;
         this.gateway = gateway;
         this.drishtiANMVillagesURL = drishtiANMVillagesURL;
-        this.httpAgent=httpAgent;
+        this.httpAgent = httpAgent;
         this.drishtiform = drishtiform;
 
     }
@@ -95,7 +95,8 @@ public class FormSubmissionController {
         HttpResponse response = new HttpResponse(false, null);
         List<FormSubmission> newSubmissionsForANM = null;
         List<FormSubmission> permnewSubmissionsForANM = new ArrayList<FormSubmission>();
-
+        String village = "";
+        boolean isComplete=false;
         try {
             String anmID = anmIdentifier;
             logger.info("******anm id*** " + anmID);
@@ -107,19 +108,37 @@ public class FormSubmissionController {
                     new TypeToken<ANMVillagesDTO>() {
                     }.getType());
             logger.info("Fetched Villages for the ANM" + anmvillagesDTOs);
+            String strvillages = anmvillagesDTOs.villages();
 
-            List<String> listvillages = anmvillagesDTOs.villages();
-            logger.info("list of villages" + listvillages);
-            Iterator<String> iterator = listvillages.iterator();
-            while (iterator.hasNext()) {
-                String village = iterator.next();
+            String[] villageanm = strvillages.split(",");
+            logger.info("anmvillages" + villageanm);
+
+            logger.info("list of villages" + villageanm);
+            for (int i = 0; i < villageanm.length; i++) {
+
+                village = villageanm[i];
                 logger.info("one village from list*******  :" + village);
-
-//        	  String village="kandukur";
                 logger.info("***form-submission***" + village);
+                long lastTimeStamp = 1;
+                
                 newSubmissionsForANM = formSubmissionService
                         .getNewSubmissionsForANM(village, timeStamp, batchSize);
-                logger.info("***form-submission detailes fetched***" + newSubmissionsForANM);
+                logger.info("********size for form submission: "+newSubmissionsForANM.size());
+//                while (!isComplete) {
+//                    FormSubmission lastSubmission = newSubmissionsForANM.get(newSubmissionsForANM.size()-1);
+//                    lastTimeStamp = lastSubmission.serverVersion();
+//                    logger.info("last timestamp"+lastTimeStamp+"*******size: "+newSubmissionsForANM.size());
+//                    List<FormSubmission> formsubmissiondata = formSubmissionService
+//                            .getNewSubmissionsForANM(village, lastTimeStamp, batchSize);
+//                    logger.info("Formsubmission data : "+formsubmissiondata);
+//                    if (formsubmissiondata.size() != 0) {
+//                        newSubmissionsForANM.addAll(formsubmissiondata);
+//                    } else {
+//                        isComplete=true;
+//                    }
+//                    logger.info("iscomplete"+isComplete);
+//                }
+                logger.info("***form-submission detailes fetched***village:" + village + "&****" + newSubmissionsForANM.size());
                 permnewSubmissionsForANM.addAll(newSubmissionsForANM);
 
             }
@@ -152,7 +171,7 @@ public class FormSubmissionController {
         });
     }
 
-  @RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/form-submissions")
+    @RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/form-submissions")
     public ResponseEntity<HttpStatus> submitForms(
             @RequestBody List<FormSubmissionDTO> formSubmissionsDTO) {
 
@@ -178,8 +197,8 @@ public class FormSubmissionController {
         }
         return new ResponseEntity<>(CREATED);
     }
-    
-        @RequestMapping(headers = {"Accept=application/json"}, method = GET, value = "/multimedia-file")
+
+    @RequestMapping(headers = {"Accept=application/json"}, method = GET, value = "/multimedia-file")
     @ResponseBody
     public List<MultimediaDTO> getFiles(@RequestParam("anm-id") String providerId) {
         logger.info("Get Multimedia file");
@@ -200,12 +219,11 @@ public class FormSubmissionController {
         MultimediaDTO multimediaDTO = new MultimediaDTO(entityId, providerId, contentType, null, fileCategory);
 
         String status = multimediaService.saveMultimediaFile(multimediaDTO, file);
-        String[] status1=status.split(":");
-        
-        if((status1[0]).equalsIgnoreCase("success")){
+        String[] status1 = status.split(":");
+
+        if ((status1[0]).equalsIgnoreCase("success")) {
             return new ResponseEntity<>(new Gson().toJson(status1[1]), HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(new Gson().toJson("fail"), HttpStatus.OK);
         }
     }

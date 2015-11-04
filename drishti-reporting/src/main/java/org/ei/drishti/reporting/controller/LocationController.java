@@ -52,13 +52,12 @@ public class LocationController {
         logger.info("*****villages fetched******"+villagesForANM);
         ANMVillagesDTO anmvillagesDTO = null;
         List<String> villages=null;
-           if (villagesForANM != null) {
+           
+            if (villagesForANM != null) {
             ANMVillages anmLocation = (ANMVillages) villagesForANM.get(0);
-            logger.info("**** fetched anmLocation details***"+anmLocation);
-           villages = collect(villagesForANM, on(ANMVillages.class).villages());
-            logger.info("**** fetched villages***"+villages);
-            
-            anmvillagesDTO = new ANMVillagesDTO(anmLocation.user_id(), anmLocation.user_role(), villages);
+            logger.info("**** fetched anmLocation details***" + anmLocation);
+
+            anmvillagesDTO = new ANMVillagesDTO(anmLocation.user_id(), anmLocation.user_role(), anmLocation.villages());
                     }
            return new ResponseEntity<>(anmvillagesDTO, OK);
     }

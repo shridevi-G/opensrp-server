@@ -84,7 +84,7 @@ public class ANMVillages {
         this.subcenter = subcenter;
         this.hospital = hospital;
         
-     logger.info("******anm****** villages****");
+     
     }
     
     public ANMVillages(String villages, String userrole, String user_id, String name,String phone_number,
