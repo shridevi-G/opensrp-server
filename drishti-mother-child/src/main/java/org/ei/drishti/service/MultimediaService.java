@@ -41,6 +41,7 @@ public class MultimediaService {
 
     private final MultimediaRepository multimediaRepository;
     private String multimediaDirPath;
+    private String audioDirPath;
     private String path;
 
     private static Logger logger = LoggerFactory
@@ -84,6 +85,7 @@ public class MultimediaService {
             MultipartFile multimediaFile) {
         logger.info("Upload file in location");
        String baseMultimediaDirPath = "/var/lib/tomcat7/webapps/drishti-web-0.1-SNAPSHOT";
+       String multimediaaudioDirPath="/var/www/html/Downloads/test";
        // String baseMultimediaDirPath = "/var/www/html/Downloads/test";
         if (!multimediaFile.isEmpty()) {
             try {
@@ -92,18 +94,19 @@ public class MultimediaService {
                         + File.separator + multimediaDTO.providerId()
                         + File.separator;
                  //multimediaDirPath = "/var/www/html/hs/";
-
+                audioDirPath=multimediaaudioDirPath+ File.separator + multimediaDTO.providerId()
+                        + File.separator;
                 switch (multimediaDTO.contentType()) {
 
                     case "audio/x-wav":
                         
-                        multimediaDirPath +=
+                        audioDirPath +=
                                 "audios" ;
-                        File file=new File(multimediaDirPath);
+                        File file=new File(audioDirPath);
                         if(!file.exists())
                             file.mkdirs();
-                        multimediaDirPath += File.separator + multimediaDTO.caseId() + ".wav";
-                        path += File.separator + "audios" + File.separator + multimediaDTO.caseId() + ".wav";
+                        audioDirPath += File.separator + multimediaDTO.caseId() + ".wav";
+                        
                         break;
 
                     case "image/jpeg":
@@ -135,7 +138,7 @@ public class MultimediaService {
                 logger.info("directory path: " + multimediaDirPath);
                 
                 if(multimediaDTO.contentType().equalsIgnoreCase("audio/x-wav")){
-                    saveAudio(multimediaFile, multimediaDirPath);
+                    saveAudio(multimediaFile, audioDirPath);
                 }
                 else{
                     File multimediaDir = new File(multimediaDirPath);
