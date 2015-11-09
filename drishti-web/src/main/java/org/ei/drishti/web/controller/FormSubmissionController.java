@@ -89,6 +89,7 @@ public class FormSubmissionController {
     @ResponseBody
     private List<FormSubmissionDTO> getNewSubmissionsForANM(
             @RequestParam("anm-id") String anmIdentifier,
+            @RequestParam("village") String anmVillage,
             @RequestParam("timestamp") Long timeStamp,
             @RequestParam(value = "batch-size", required = false) Integer batchSize) {
         logger.info("***** from controller&&&&&");
@@ -97,32 +98,32 @@ public class FormSubmissionController {
         List<FormSubmission> permnewSubmissionsForANM = new ArrayList<FormSubmission>();
         String village = "";
         boolean isComplete=false;
-        try {
-            String anmID = anmIdentifier;
-            logger.info("******anm id*** " + anmID);
-            logger.info("****** village URL " + drishtiANMVillagesURL);
-            response = httpAgent.get(drishtiANMVillagesURL + "?anm-id=" + anmID);
-            logger.info("********villages response***" + response);
-
-            ANMVillagesDTO anmvillagesDTOs = new Gson().fromJson(response.body(),
-                    new TypeToken<ANMVillagesDTO>() {
-                    }.getType());
-            logger.info("Fetched Villages for the ANM" + anmvillagesDTOs);
-            String strvillages = anmvillagesDTOs.villages();
-
-            String[] villageanm = strvillages.split(",");
-            logger.info("anmvillages" + villageanm);
-
-            logger.info("list of villages" + villageanm);
-            for (int i = 0; i < villageanm.length; i++) {
-
-                village = villageanm[i];
-                logger.info("one village from list*******  :" + village);
-                logger.info("***form-submission***" + village);
-                long lastTimeStamp = 1;
+//        try {
+//            String anmID = anmIdentifier;
+//            logger.info("******anm id*** " + anmID);
+//            logger.info("****** village URL " + drishtiANMVillagesURL);
+//            response = httpAgent.get(drishtiANMVillagesURL + "?anm-id=" + anmID);
+//            logger.info("********villages response***" + response);
+//
+//            ANMVillagesDTO anmvillagesDTOs = new Gson().fromJson(response.body(),
+//                    new TypeToken<ANMVillagesDTO>() {
+//                    }.getType());
+//            logger.info("Fetched Villages for the ANM" + anmvillagesDTOs);
+//            String strvillages = anmvillagesDTOs.villages();
+//
+//            String[] villageanm = strvillages.split(",");
+//            logger.info("anmvillages" + villageanm);
+//
+//            logger.info("list of villages" + villageanm);
+//            for (int i = 0; i < villageanm.length; i++) {
+//
+//                village = villageanm[i];
+//                logger.info("one village from list*******  :" + village);
+//                logger.info("***form-submission***" + village);
+//                long lastTimeStamp = 1;
                 
                 newSubmissionsForANM = formSubmissionService
-                        .getNewSubmissionsForANM(village, timeStamp, batchSize);
+                        .getNewSubmissionsForANM(anmVillage, timeStamp, batchSize);
                 logger.info("********size for form submission: "+newSubmissionsForANM.size());
 //                while (!isComplete) {
 //                    FormSubmission lastSubmission = newSubmissionsForANM.get(newSubmissionsForANM.size()-1);
@@ -138,13 +139,13 @@ public class FormSubmissionController {
 //                    }
 //                    logger.info("iscomplete"+isComplete);
 //                }
-                logger.info("***form-submission detailes fetched***village:" + village + "&****" + newSubmissionsForANM.size());
+                logger.info("***form-submission detailes fetched***village:" + anmVillage + "&****" + newSubmissionsForANM.size());
                 permnewSubmissionsForANM.addAll(newSubmissionsForANM);
 
-            }
-        } catch (Exception e) {
-            logger.error(MessageFormat.format("{0} occurred while fetching Village Details for anm. StackTrace: \n {1}", e));
-        }
+//            }
+//        } catch (Exception e) {
+//            logger.error(MessageFormat.format("{0} occurred while fetching Village Details for anm. StackTrace: \n {1}", e));
+//        }
 
         logger.info("details of data from db********" + permnewSubmissionsForANM);
 
