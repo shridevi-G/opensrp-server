@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -26,6 +27,7 @@ public class ANMControllerTest {
 
     @Mock
     private ANMService anmService;
+
     @Mock
     private Location location;
     @Mock
@@ -34,7 +36,6 @@ public class ANMControllerTest {
     private DetailsFetcherFactory detailsFetcherFactory;
     @Mock
     private ANMDetailsFetcher anmDetailsFetcher;
-
 
     private ANMController controller;
 
@@ -49,7 +50,7 @@ public class ANMControllerTest {
         List<String> roles = asList("ROLE_USER");
         when(httpAgent.get("http://user-details-endpoint/user-details?anm-id=username1")).
                 thenReturn(new HttpResponse(true,
-                        new Gson().toJson(new UserDetail("username1", roles))));
+                                new Gson().toJson(new UserDetail("username1", roles))));
 
         when(detailsFetcherFactory.detailsFetcher(roles)).thenReturn(anmDetailsFetcher);
         when(anmDetailsFetcher.fetchDetails("username1")).thenReturn(asList(

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+
 @Component
 public abstract class ANMDetailsFetcher {
     protected ANMService anmService;
@@ -17,5 +18,6 @@ public abstract class ANMDetailsFetcher {
     }
 
     public abstract List<SP_ANM> fetchDetails(String anmIdentifier);
+    
 }
 

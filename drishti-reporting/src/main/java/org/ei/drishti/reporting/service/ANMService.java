@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import org.ei.drishti.reporting.domain.ANMVillages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,7 @@ public class ANMService {
     public List<SP_ANM> anmsInTheSameSC(String anmIdentifier) {
         return allANMsRepository.fetchAllANMSInSameSC(anmIdentifier);
     }
-
+   
     @Transactional("service_provided")
     public List<SP_ANM> anmsInTheSamePHC(String anmIdentifier) {
         return allANMsRepository.fetchAllANMSInSamePHC(anmIdentifier);

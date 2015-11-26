@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.ei.drishti.reporting.handler;
 
 import static ch.lambdaj.Lambda.collect;
@@ -41,6 +36,8 @@ public class FormDatahandler {
     String regNumber = "";
     String wifeName = "";
     String phoneNumber = "";
+    String village = "";
+    String registrationDate = "";
 
     @Autowired
     public void FormDataHandler(DateUtil dateUtil, ANCVisitRepository ancVisitRepository, ANMService anmService, SMSController smsController, VisitService visitService) {
@@ -54,9 +51,15 @@ public class FormDatahandler {
 
     public void ecRegistration(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
         String entityId = dataObject.getString("entityId");
+        String anmid = dataObject.getString("anmId");
+        String currentMethod = "";
+        Integer numberOfCondomsSupplied = 0;
+        String count = "";
         logger.info("ecregistration method");
         JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
+        logger.info("ecregistration data fetch");
         for (int i = 0; i < fieldJsonArray.length(); i++) {
+
             JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
 
             if (jsonObject.has("name")
@@ -64,27 +67,101 @@ public class FormDatahandler {
 
                 phoneNumber = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("ecNumber")) {
 
                 regNumber = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("wifeName")) {
 
                 wifeName = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("registrationDate")) {
+
+                registrationDate = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("currentMethod")) {
+
+                currentMethod = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("numberOfCondomsSupplied") && jsonObject.has("value")
+                    && jsonObject.getString("value") != null) {
+                logger.info("test for");
+
+                count = jsonObject.getString("value");
+                numberOfCondomsSupplied = Integer.parseInt(count);
+
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("village")) {
+
+                village = (jsonObject.has("value")
+                        && jsonObject.getString("value") != null) ? jsonObject
+                                .getString("value") : "";
             }
         }
-
+        if(!currentMethod.equalsIgnoreCase("none")&& !currentMethod.equalsIgnoreCase("none_ps") && !currentMethod.equalsIgnoreCase("none_ss")
+            &&!currentMethod.equalsIgnoreCase("dmpa_injectable")&& !currentMethod.equalsIgnoreCase("traditional_methods") && !currentMethod.equalsIgnoreCase("centchroman"))
+        {
+            ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "FP", currentMethod, numberOfCondomsSupplied, registrationDate, village, 0, "", "");
+        }
+        
         logger.info("invoke sms controller******" + phoneNumber);
         smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "EC");
         ancVisitRepository.ecinsert(entityId, phoneNumber);
+        
+    
+   }
+
+    public void recordECP(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
+        String entityId = dataObject.getString("entityId");
+        String anmid = dataObject.getString("anmId");
+        Integer numberOfECPsGiven = 0;
+        String submissionDate = "";
+        JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
+        logger.info("ecregistration data fetch");
+        for (int i = 0; i < fieldJsonArray.length(); i++) {
+
+            JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
+
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("numberOfECPsGiven")) {
+
+                String count = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+                numberOfECPsGiven = Integer.parseInt(count);
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("submissionDate")) {
+
+                submissionDate = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("village")) {
+
+                village = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+        }
+        ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "FP", "ecp", numberOfECPsGiven, submissionDate, village, 0, "", "");
     }
 
     public void ecEdit(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
@@ -98,7 +175,7 @@ public class FormDatahandler {
                     && jsonObject.getString("name").equals("phoneNumber")) {
                 phoneNumber = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
 
         }
@@ -126,14 +203,14 @@ public class FormDatahandler {
                     && jsonObject.getString("name").equals("phoneNumber")) {
                 phoneNumber = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("ecId")) {
 
                 ecId = (jsonObject.has("value") && jsonObject
                         .getString("value") != null) ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
 
         }
@@ -152,6 +229,7 @@ public class FormDatahandler {
     public void ancRegistration(JSONObject dataObject, String visittype, String anmNumber) throws JSONException {
         String edd = "";
         String ecNumber = "";
+
         logger.info("anc_registration handler");
         String anmid = dataObject.getString("anmId");
         String entityId = dataObject.getString("entityId");
@@ -165,14 +243,14 @@ public class FormDatahandler {
 
                 edd = jsonObject.has("value") && jsonObject.
                         getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
 
                 logger.info("reference date: " + edd);
             }
             if (jsonObject.has("name") && jsonObject.getString("name").equals("phoneNumber")) {;
                 phoneNumber = jsonObject.has("value") && jsonObject
                         .getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
 
             if (jsonObject.has("name")
@@ -180,22 +258,37 @@ public class FormDatahandler {
 
                 regNumber = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("ecNumber")) {
 
                 ecNumber = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("wifeName")) {
 
                 wifeName = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("village")) {
+
+                village = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("registrationDate")) {
+
+                registrationDate = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+
         }
         List visitconf = visitService.getVisitconf();
         logger.info("vissit type details: " + visitconf);
@@ -212,14 +305,67 @@ public class FormDatahandler {
             logger.info("phonenumber: " + ptphoneNumber);
 
             ancVisitRepository.insert(entityId, ptphoneNumber, anmNumber, "anc_visit", visitnumber, edd, wifeName, visitdate, anmid);
+            ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "anc", "", 0, registrationDate, village, 0, edd, "");
         }
         if (visittype.equalsIgnoreCase("anc_registration_oa")) {
             logger.info("trying to send sms");
             smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "ANC");
             logger.info("sms sent done");
             ancVisitRepository.insert(entityId, phoneNumber, anmNumber, "anc_visit", visitnumber, edd, wifeName, visitdate, anmid);
+            ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "anc", "", 0, registrationDate, village, 0, edd, "");
         }
 
+    }
+
+    public void ttData(JSONObject dataObject, String visittype) throws JSONException {
+        String anmid = dataObject.getString("anmId");
+        String entityId = dataObject.getString("entityId");
+        String ecId = "";
+        String ttDose = "";
+        String ttInjectionPlace = "";
+        String ttDate = "";
+        JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
+        for (int i = 0; i < fieldJsonArray.length(); i++) {
+
+            JSONObject jsonObject = fieldJsonArray
+                    .getJSONObject(i);
+            if ((jsonObject.has("name"))
+                    && jsonObject.getString("name").equals("ecId")) {
+
+                ecId = (jsonObject.has("value") && jsonObject
+                        .getString("value") != null) ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("village")) {
+
+                village = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("ttDose")) {
+
+                ttDose = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("ttInjectionPlace")) {
+
+                ttInjectionPlace = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("ttDate")) {
+
+                ttDate = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+        }
+        ancVisitRepository.reportinsert(entityId, ecId, "", anmid, ttDose, "", 0, ttDate, village, 0, "", ttInjectionPlace);
     }
 
     public void ancVisit(JSONObject dataObject, String visittype, String anmnumber) throws JSONException {
@@ -243,7 +389,7 @@ public class FormDatahandler {
 
                 ecId = (jsonObject.has("value") && jsonObject
                         .getString("value") != null) ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
         }
         logger.info("entityid" + ecId);
@@ -289,30 +435,41 @@ public class FormDatahandler {
     }
 
     public void pncRegistration(JSONObject dataObject, String visittype, String anmNumber) throws JSONException {
-        String edd = "";
-        String ecNumber = "";
+        String child_dob = "";
+        String deliveryPlace = "";
         String ptnumber = "";
         String ecId = "";
+        String deliveryType = "";
+        Integer weight = 0;
+        Integer child_weight = 0;
+        String anmid = dataObject.getString("anmId");
         String entityId = dataObject.getString("entityId");
         logger.info("pnc registration");
 
         JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
+        JSONArray subfieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("sub_forms");
+        logger.info("sbform [0]:  " + subfieldJsonArray);
+        JSONArray subfieldJsonArr = subfieldJsonArray.getJSONObject(0).getJSONArray("instances");
+        logger.info("instances [0]:  " + subfieldJsonArr);
+        child_weight = subfieldJsonArr.getJSONObject(0).getInt("weight");
+
+        logger.info("weight [0]:  " + child_weight);
 
         for (int i = 0; i < fieldJsonArray.length(); ++i) {
             JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("referenceDate")) {
 
-                edd = jsonObject.has("value") && jsonObject.
+                child_dob = jsonObject.has("value") && jsonObject.
                         getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
 
-                logger.info("reference date: " + edd);
+                logger.info("reference date: " + child_dob);
             }
             if (jsonObject.has("name") && jsonObject.getString("name").equals("phoneNumber")) {
                 phoneNumber = jsonObject.has("value") && jsonObject
                         .getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
 
             if (jsonObject.has("name")
@@ -320,29 +477,44 @@ public class FormDatahandler {
 
                 regNumber = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
-                    && jsonObject.getString("name").equals("ecNumber")) {
+                    && jsonObject.getString("name").equals("deliveryPlace")) {
 
-                ecNumber = jsonObject.has("value")
+                deliveryPlace = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("wifeName")) {
 
                 wifeName = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("ecId")) {
 
                 ecId = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
 
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("deliveryType")) {
+
+                deliveryType = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("registrationDate")) {
+
+                registrationDate = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
             }
         }
         if (visittype.equalsIgnoreCase("delivery_outcome")) {
@@ -353,10 +525,12 @@ public class FormDatahandler {
             String womphoneNumber = collect(ancvisitdetails, on(ANCVisitDue.class).patientnum()).get(0).toString();
             logger.info("wom phone number from db" + womphoneNumber);
             smsController.sendSMSPNC(womphoneNumber, regNumber, womenName, "PNC");
+            ancVisitRepository.reportinsert(entityId, ecId, wifeName, anmid, "pnc", deliveryType, 0, registrationDate, village, child_weight, child_dob, deliveryPlace);
         }
         if (visittype.equalsIgnoreCase("pnc_registration_oa")) {
             logger.info("phonenumber" + phoneNumber + "*** wife name" + wifeName + "***reg Number" + regNumber);
             smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "PNC");
+            ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "pnc", deliveryType, 0, registrationDate, village, child_weight, child_dob, deliveryPlace);
         }
     }
 
@@ -372,26 +546,26 @@ public class FormDatahandler {
             if ((jsonObject.has("name")) && jsonObject.getString("name").equals("ecId")) {
                 entityidEC = (jsonObject.has("value") && jsonObject
                         .getString("value") != null) ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("wifeName")) {
 
                 wifeName = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("motherName")) {
 
                 motherName = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if ((jsonObject.has("name")) && jsonObject.getString("name").equals("isConsultDoctor")) {
                 String isCon = (jsonObject.has("value") && jsonObject
                         .getString("value") != null) ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
                 logger.info("res1+++++" + isCon);
                 if (isCon.equalsIgnoreCase("yes")) {
 
@@ -443,7 +617,7 @@ public class FormDatahandler {
             if (jsonObject.has("name") && jsonObject.getString("name").equals("phoneNumber")) {
                 phoneNumber = jsonObject.has("value") && jsonObject
                         .getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
 
             if (jsonObject.has("name")
@@ -451,28 +625,28 @@ public class FormDatahandler {
 
                 motherName = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("wifeName")) {
 
                 wifeName = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("childId")) {
 
                 childId = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("dateOfBirth")) {
 
                 dateOfBirth = jsonObject.has("value")
                         && jsonObject.getString("value") != null ? jsonObject
-                        .getString("value") : "";
+                                .getString("value") : "";
             }
         }
 

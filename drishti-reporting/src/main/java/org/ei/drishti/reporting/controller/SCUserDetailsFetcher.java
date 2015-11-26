@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import org.ei.drishti.reporting.domain.ANMVillages;
 
 @Component
 public class SCUserDetailsFetcher extends ANMDetailsFetcher {
@@ -19,4 +20,5 @@ public class SCUserDetailsFetcher extends ANMDetailsFetcher {
     public List<SP_ANM> fetchDetails(String anmIdentifier) {
         return anmService.anmsInTheSameSC(anmIdentifier);
     }
+
 }

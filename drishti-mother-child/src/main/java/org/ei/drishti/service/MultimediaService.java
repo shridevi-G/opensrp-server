@@ -42,6 +42,7 @@ public class MultimediaService {
     private final MultimediaRepository multimediaRepository;
     private String multimediaDirPath;
     private String audioDirPath;
+    private String auidoDirectoryPath;
     private String path;
 
     private static Logger logger = LoggerFactory
@@ -69,8 +70,12 @@ public class MultimediaService {
                         .withFileCategory(multimediaDTO.fileCategory());
 
                 multimediaRepository.add(multimediaFile);
-
+                 if(multimediaDTO.contentType().equalsIgnoreCase("audio/x-wav")){
+                     return "success"+":"+auidoDirectoryPath;
+                 }
+                 else{
                 return "success"+":"+path;
+                 }
 
             } catch (Exception e) {
                 e.getMessage();
@@ -85,7 +90,8 @@ public class MultimediaService {
             MultipartFile multimediaFile) {
         logger.info("Upload file in location");
        String baseMultimediaDirPath = "/var/lib/tomcat7/webapps/drishti-web-0.1-SNAPSHOT";
-       String multimediaaudioDirPath="/var/www/html/Downloads/test";
+       String multimediaaudioDirPath="/var/www/html/Downloads/opensrp";
+       String audioPath="/Downloads/opensrp";
        // String baseMultimediaDirPath = "/var/www/html/Downloads/test";
         if (!multimediaFile.isEmpty()) {
             try {
@@ -96,17 +102,21 @@ public class MultimediaService {
                  //multimediaDirPath = "/var/www/html/hs/";
                 audioDirPath=multimediaaudioDirPath+ File.separator + multimediaDTO.providerId()
                         + File.separator;
+                auidoDirectoryPath=audioPath+File.separator + multimediaDTO.providerId()
+                        + File.separator;
                 switch (multimediaDTO.contentType()) {
 
                     case "audio/x-wav":
-                        
+//                            multimediaDirPath += "images" + File.separator
+//                                + multimediaDTO.caseId() + ".wav";
+//                        path += File.separator + "images" + File.separator + multimediaDTO.caseId() + ".wav";
                         audioDirPath +=
                                 "audios" ;
                         File file=new File(audioDirPath);
                         if(!file.exists())
                             file.mkdirs();
                         audioDirPath += File.separator + multimediaDTO.caseId() + ".wav";
-                        
+                        auidoDirectoryPath+="audios"+File.separator+multimediaDTO.caseId()+".wav";
                         break;
 
                     case "image/jpeg":
