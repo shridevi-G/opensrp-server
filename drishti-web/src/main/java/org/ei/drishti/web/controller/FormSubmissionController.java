@@ -24,7 +24,7 @@ import org.ei.drishti.form.domain.FormSubmission;
 import org.ei.drishti.form.service.FormSubmissionConverter;
 import org.ei.drishti.form.service.FormSubmissionService;
 import org.ei.drishti.service.MultimediaService;
-import org.ei.drishti.web.handler.FormsubmissionHandler;
+
 import org.json.JSONException;
 import org.motechproject.scheduler.gateway.OutboundEventGateway;
 import org.slf4j.Logger;
@@ -50,23 +50,22 @@ public class FormSubmissionController {
     private static Logger logger = LoggerFactory.getLogger(FormSubmissionController.class.toString());
     private FormSubmissionService formSubmissionService;
     private HttpAgent httpAgent;
-    private final String drishtiANMVillagesURL;
+    private final String drishtiformdataURL;
     private OutboundEventGateway gateway;
-    private FormsubmissionHandler drishtiform;
 
-    @Autowired
     private MultimediaService multimediaService;
 
     @Autowired
-    public FormSubmissionController(@Value("#{drishti['drishti.anm.village.url']}") String drishtiANMVillagesURL,
-            HttpAgent httpAgent, FormsubmissionHandler drishtiform,
+    public FormSubmissionController(@Value("#{drishti['drishti.form.data.url']}") String drishtiformdataURL,
+            HttpAgent httpAgent,
             FormSubmissionService formSubmissionService,
+            MultimediaService multimediaService,
             OutboundEventGateway gateway) {
         this.formSubmissionService = formSubmissionService;
         this.gateway = gateway;
-        this.drishtiANMVillagesURL = drishtiANMVillagesURL;
+        this.drishtiformdataURL = drishtiformdataURL;
         this.httpAgent = httpAgent;
-        this.drishtiform = drishtiform;
+        this.multimediaService=multimediaService;
 
     }
 //    @RequestMapping(method = GET, value = "/form-submissions")
@@ -87,69 +86,21 @@ public class FormSubmissionController {
 
     @RequestMapping(method = GET, value = "/form-submissions")
     @ResponseBody
-    private List<FormSubmissionDTO> getNewSubmissionsForANM(
+    public List<FormSubmissionDTO> getNewSubmissionsForANM(
             @RequestParam("anm-id") String anmIdentifier,
             @RequestParam("village") String anmVillage,
             @RequestParam("timestamp") Long timeStamp,
             @RequestParam(value = "batch-size", required = false) Integer batchSize) {
         logger.info("***** from controller&&&&&");
-        HttpResponse response = new HttpResponse(false, null);
+//        HttpResponse response = new HttpResponse(false, null);
         List<FormSubmission> newSubmissionsForANM = null;
-        List<FormSubmission> permnewSubmissionsForANM = new ArrayList<FormSubmission>();
-        String village = "";
-        boolean isComplete=false;
-//        try {
-//            String anmID = anmIdentifier;
-//            logger.info("******anm id*** " + anmID);
-//            logger.info("****** village URL " + drishtiANMVillagesURL);
-//            response = httpAgent.get(drishtiANMVillagesURL + "?anm-id=" + anmID);
-//            logger.info("********villages response***" + response);
-//
-//            ANMVillagesDTO anmvillagesDTOs = new Gson().fromJson(response.body(),
-//                    new TypeToken<ANMVillagesDTO>() {
-//                    }.getType());
-//            logger.info("Fetched Villages for the ANM" + anmvillagesDTOs);
-//            String strvillages = anmvillagesDTOs.villages();
-//
-//            String[] villageanm = strvillages.split(",");
-//            logger.info("anmvillages" + villageanm);
-//
-//            logger.info("list of villages" + villageanm);
-//            for (int i = 0; i < villageanm.length; i++) {
-//
-//                village = villageanm[i];
-//                logger.info("one village from list*******  :" + village);
-//                logger.info("***form-submission***" + village);
-//                long lastTimeStamp = 1;
-                
-                newSubmissionsForANM = formSubmissionService
-                        .getNewSubmissionsForANM(anmVillage, timeStamp, batchSize);
-                logger.info("********size for form submission: "+newSubmissionsForANM.size());
-//                while (!isComplete) {
-//                    FormSubmission lastSubmission = newSubmissionsForANM.get(newSubmissionsForANM.size()-1);
-//                    lastTimeStamp = lastSubmission.serverVersion();
-//                    logger.info("last timestamp"+lastTimeStamp+"*******size: "+newSubmissionsForANM.size());
-//                    List<FormSubmission> formsubmissiondata = formSubmissionService
-//                            .getNewSubmissionsForANM(village, lastTimeStamp, batchSize);
-//                    logger.info("Formsubmission data : "+formsubmissiondata);
-//                    if (formsubmissiondata.size() != 0) {
-//                        newSubmissionsForANM.addAll(formsubmissiondata);
-//                    } else {
-//                        isComplete=true;
-//                    }
-//                    logger.info("iscomplete"+isComplete);
-//                }
-                logger.info("***form-submission detailes fetched***village:" + anmVillage + "&****" + newSubmissionsForANM.size());
-                permnewSubmissionsForANM.addAll(newSubmissionsForANM);
 
-//            }
-//        } catch (Exception e) {
-//            logger.error(MessageFormat.format("{0} occurred while fetching Village Details for anm. StackTrace: \n {1}", e));
-//        }
+        newSubmissionsForANM = formSubmissionService
+                .getNewSubmissionsForANM(anmVillage, timeStamp, batchSize);
 
-        logger.info("details of data from db********" + permnewSubmissionsForANM);
+        logger.info("details of data from db********" + newSubmissionsForANM);
 
-        return with(permnewSubmissionsForANM).convert(
+        return with(newSubmissionsForANM).convert(
                 new Converter<FormSubmission, FormSubmissionDTO>() {
                     @Override
                     public FormSubmissionDTO convert(FormSubmission submission) {
@@ -160,7 +111,7 @@ public class FormSubmissionController {
 
     @RequestMapping(method = GET, value = "/all-form-submissions")
     @ResponseBody
-    private List<FormSubmissionDTO> getAllFormSubmissions(@RequestParam("timestamp") Long timeStamp,
+    public List<FormSubmissionDTO> getAllFormSubmissions(@RequestParam("timestamp") Long timeStamp,
             @RequestParam(value = "batch-size", required = false) Integer batchSize) {
         List<FormSubmission> allSubmissions = formSubmissionService
                 .getAllSubmissions(timeStamp, batchSize);
@@ -175,25 +126,18 @@ public class FormSubmissionController {
     @RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/form-submissions")
     public ResponseEntity<HttpStatus> submitForms(
             @RequestBody List<FormSubmissionDTO> formSubmissionsDTO) {
-
+        String url = drishtiformdataURL;
+        String formData = "formdata";
+        String formdetails = new Gson().toJson(formSubmissionsDTO);
         try {
             if (formSubmissionsDTO.isEmpty()) {
                 return new ResponseEntity<>(BAD_REQUEST);
             }
-            logger.info("*****" + formSubmissionsDTO.size() + " : -----------");
-
-            logger.info("** transfer data to handler*******");
-            drishtiform.formData(formSubmissionsDTO);
-
-            gateway.sendEventMessage(new FormSubmissionEvent(formSubmissionsDTO)
-                    .toEvent());
-            logger.debug(format(
-                    "Added Form submissions to queue.\nSubmissions: {0}",
-                    formSubmissionsDTO));
-        } catch (JSONException | ParseException e) {
-            logger.error(format(
-                    "Form submissions processing failed with exception {0}.\nSubmissions: {1}",
-                    e, formSubmissionsDTO));
+            httpAgent.post(url + "/" + formData, formdetails, "application/json");
+            gateway.sendEventMessage(new FormSubmissionEvent(formSubmissionsDTO).toEvent());
+            logger.debug(format("Added Form submissions to queue.\nSubmissions: {0}", formSubmissionsDTO));
+        } catch (Exception e) {
+            logger.error(format("Form submissions processing failed with exception {0}.\nSubmissions: {1}", e, formSubmissionsDTO));
             return new ResponseEntity<>(INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(CREATED);

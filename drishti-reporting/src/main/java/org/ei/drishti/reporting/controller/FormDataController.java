@@ -73,8 +73,13 @@ public class FormDataController {
             logger.info("value of anmphonenumber from db:" + anmphoneNumber);
 
             if (visittype.equalsIgnoreCase("ec_registration")) {
-                logger.info("visit type" + visittype);
+                logger.info("visit type: " + visittype);
                 formDataHandler.ecRegistration(dataObject, anmphoneNumber);
+
+            }
+            if (visittype.equalsIgnoreCase("record_ecps")) {
+                logger.info("visit type: " + visittype);
+                formDataHandler.recordECP(dataObject, anmphoneNumber);
 
             }
             if (visittype.equalsIgnoreCase("ec_edit")) {
@@ -122,6 +127,9 @@ public class FormDataController {
             }
             if (visittype.equalsIgnoreCase("pnc_visit") || visittype.equalsIgnoreCase("child_illness")) {
                 formDataHandler.visitpoc(dataObject, visittype, phoneNumber);
+            }
+            if (visittype.equalsIgnoreCase("tt")){
+                formDataHandler.ttData(dataObject, visittype);
             }
 
         }

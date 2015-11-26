@@ -149,7 +149,8 @@
         <dependency>
             <groupId>org.ei.drishti</groupId>
             <artifactId>drishti-mother-child</artifactId>
-            <version>${release.version}</version>
+            <version>0.1-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

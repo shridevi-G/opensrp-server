@@ -44,6 +44,7 @@ public class FormSubmissionService {
     }
 
     public List<FormSubmission> getAllSubmissions(Long version, Integer batchSize) {
+        
         return allFormSubmissions.allFormSubmissions(version, batchSize);
     }
 
