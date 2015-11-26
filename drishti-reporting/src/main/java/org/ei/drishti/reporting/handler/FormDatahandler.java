@@ -38,16 +38,19 @@ public class FormDatahandler {
     String phoneNumber = "";
     String village = "";
     String registrationDate = "";
-
+  
     @Autowired
-    public void FormDataHandler(DateUtil dateUtil, ANCVisitRepository ancVisitRepository, ANMService anmService, SMSController smsController, VisitService visitService) {
-        this.ancVisitRepository = ancVisitRepository;
-        this.smsController = smsController;
-        this.anmService = anmService;
-        this.visitService = visitService;
-        this.dateUtil = dateUtil;
-
-    }
+    public FormDatahandler(DateUtil dateUtil2,
+			ANCVisitRepository ancVisitRepository2, ANMService anmService2,
+			SMSController smsController2, VisitService visitService2) {
+    	
+    	this.dateUtil = dateUtil2;
+    	this.ancVisitRepository = ancVisitRepository2;
+    	 this.anmService = anmService2;
+        this.smsController = smsController2;
+         this.visitService = visitService2;
+      
+	}
 
     public void ecRegistration(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
         String entityId = dataObject.getString("entityId");

@@ -1,6 +1,8 @@
 package org.ei.drishti.reporting.controller;
 
+import org.ei.drishti.dto.ANMVillagesDTO;
 import org.ei.drishti.dto.VillagesDTO;
+import org.ei.drishti.reporting.domain.ANMVillages;
 import org.ei.drishti.reporting.domain.Location;
 import org.ei.drishti.reporting.domain.PHC;
 import org.ei.drishti.reporting.service.ANMService;
@@ -15,20 +17,22 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class LocationControllerTest {
+	 @Mock
+	    private ANMService anmService;
+	    @Mock
+	    private Location location;
+	    
+	    @Mock   
+	    private ANMVillages anmLocation;
+	    @Mock
+	    private PHC phc;
+	    private LocationController controller;
 
-    @Mock
-    private ANMService anmService;
-    @Mock
-    private Location location;
-    @Mock
-    private PHC phc;
-    private LocationController controller;
-
-    @Before
-    public void setUp() throws Exception {
-        initMocks(this);
-        controller = new LocationController(anmService);
-    }
+	    @Before
+	    public void setUp() throws Exception {
+	        initMocks(this);
+	        controller = new LocationController(anmService);
+	    }
 
     @Test
     public void shouldReturnListOfVillagesForANM() throws Exception {
@@ -50,4 +54,26 @@ public class LocationControllerTest {
         VillagesDTO villagesDTO = new VillagesDTO("district", "PHC X", "phc1", "sc", asList("village1", "village2"));
         assertEquals(villagesDTO, response.getBody());
     }
+    
+    @Test
+    public void anmVillagestest() throws Exception {
+     when(anmService.getANMVillages("anm123")).thenReturn(
+              asList(
+                  
+                      new ANMVillages("village1", "sc","phc","asd","sfs",123,2323,32423,21213,2323,2323),
+                      new ANMVillages("village2", "sc32","phc","asd","sfs",123,2323,32423,21213,2323,2323)
+                    
+              ));   
+          when(anmService.getANMLocation("anm123")).thenReturn(anmLocation);
+       when(anmLocation.user_id()).thenReturn("phc");
+       when(anmLocation.user_role()).thenReturn("sc");
+       when(anmLocation.villages()).thenReturn("village1");
+
+       ResponseEntity<ANMVillagesDTO> response1;
+               response1= controller.anmVillages("anm123");
+
+       ANMVillagesDTO anmvillagesDT = new ANMVillagesDTO("phc","sc","village1");
+       assertEquals(anmvillagesDT, response1.getBody());
+       
+   }
 }

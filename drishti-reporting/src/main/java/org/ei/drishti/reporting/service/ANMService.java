@@ -75,4 +75,9 @@ public class ANMService {
         logger.info("fecth phc" + id);
         return allLocationsRepository.fetchphc(id);
     }
+    
+    @Transactional("service_provided")
+    public ANMVillages getANMLocation(String anmIdentifier) {
+        return allLocationsRepository.fetchLocationByANMIdentifier(anmIdentifier);
+    }
 }
