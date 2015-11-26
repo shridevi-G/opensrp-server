@@ -46,7 +46,13 @@ public class EcRegDetails {
         this.phonenumber=phonenumber;
        }
 
-    public Integer id() {
+    public EcRegDetails(int id, String entityid,String phonenumber) {
+    	this.id=id; 
+    	this.entityid=entityid;
+         this.phonenumber=phonenumber;
+	}
+
+	public Integer id() {
         return id;
     }
     public void setentityid(String entityid){

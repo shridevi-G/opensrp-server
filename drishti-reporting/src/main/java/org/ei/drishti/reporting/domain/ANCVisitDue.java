@@ -84,7 +84,21 @@ public class ANCVisitDue {
              
     }
 
-    public Integer id() {
+    public ANCVisitDue(int id, String entityid,String patientnum,String anmnum,String visittype,Integer visitno,String lmpdate, String womenname,String visitdate,String anmid) {
+    	this.id=id;
+    	this.entityid=entityid;
+        this.patientnum=patientnum;
+        this.anmnum=anmnum;
+        this.visittype=visittype;
+        this.visitno=visitno;
+        this.visitdate=visitdate;
+        this.womenname=womenname;
+        this.lmpdate=lmpdate;
+        this.anmid=anmid;
+	}
+
+
+	public Integer id() {
         return id;
     }
     public void setentityid(String entityid){
