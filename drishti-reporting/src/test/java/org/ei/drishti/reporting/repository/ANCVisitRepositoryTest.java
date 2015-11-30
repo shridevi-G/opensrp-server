@@ -30,11 +30,7 @@ public class ANCVisitRepositoryTest {
 
 		ancvisitRepository.insert("entityid", "patientnum", "anmnum",
 				"visittype", 432, "lmpdate", "womenname", "visitdate", "anmid");
-		/* ancvisitRepository.ancsave("entityid", "patientnum", "anmnum",
-		 "visittype", 432, "lmpdate", "womenname", "visitdate", "anmid");
-		 verify(ancvisitRepository).ancsave("entityid", "patientnum",
-		 "anmnum", "visittype", 432, "lmpdate", "womenname", "visitdate",
-		 "anmid");*/
+		
 	}
 
 	@Test
