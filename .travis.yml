@@ -3,6 +3,8 @@ language: java
 sudo: false
 addons:
   postgresql: 9.3
+  code_climate:
+        repo_token: c16bc0149d0290f2f90d8d8938f2a51455ac7391749e1252fe764bedbda719ca
 services:
   - couchdb
   - rabbitmq
