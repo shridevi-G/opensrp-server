@@ -441,7 +441,7 @@ public class FormDatahandler {
         String ecId = "";
         String deliveryType = "";
         Integer weight = 0;
-        Integer child_weight = 0;
+        Integer child_weight=0;
         String anmid = dataObject.getString("anmId");
         String entityId = dataObject.getString("entityId");
         logger.info("pnc registration");
@@ -451,8 +451,11 @@ public class FormDatahandler {
         logger.info("sbform [0]:  " + subfieldJsonArray);
         JSONArray subfieldJsonArr = subfieldJsonArray.getJSONObject(0).getJSONArray("instances");
         logger.info("instances [0]:  " + subfieldJsonArr);
-        child_weight = subfieldJsonArr.getJSONObject(0).getInt("weight");
-
+        logger.info("weight child:  " + subfieldJsonArr.getJSONObject(0).getString("weight"));
+        if(!subfieldJsonArr.getJSONObject(0).getString("weight").equalsIgnoreCase("")){
+        String chiweight=subfieldJsonArr.getJSONObject(0).getString("weight");
+            child_weight=Integer.parseInt(chiweight);
+        }
         logger.info("weight [0]:  " + child_weight);
 
         for (int i = 0; i < fieldJsonArray.length(); ++i) {
