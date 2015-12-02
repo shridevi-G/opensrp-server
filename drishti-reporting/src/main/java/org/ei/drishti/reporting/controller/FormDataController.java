@@ -51,7 +51,18 @@ public class FormDataController {
         this.smsController = smsController;
     }
 
-    @RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/formdata")
+    public FormDataController(ANMService anmService2,
+			FormDatahandler formDataHandler2, SMSController smsController2,
+			DateUtil dateUtil2) {
+    	
+    	this.anmService = anmService2;
+        this.formDataHandler = formDataHandler2;
+        this.smsController = smsController2;
+        this.dateUtil = dateUtil2;
+        
+    }
+
+	@RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/formdata")
     public void formData(
             @RequestBody List<FormSubmissionDTO> formSubmissionsDTO) throws JSONException {
         logger.info("^^ form data into reporting controller****");
