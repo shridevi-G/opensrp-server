@@ -159,6 +159,7 @@ public class AllFormSubmissions extends MotechBaseRepository<FormSubmission> {
         return db.queryView(createQuery("checkEdit")
                 .includeDocs(true),
                 FormSubmission.class);
+        
    }
    
 }
