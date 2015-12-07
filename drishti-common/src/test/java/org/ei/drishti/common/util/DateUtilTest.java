@@ -1,27 +1,53 @@
 package org.ei.drishti.common.util;
-import static org.junit.Assert.assertEquals;
+
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DateUtilTest {
-	
-	private MockDateTime mockDateTime;
-	private DateTimeUtility dateTimeUtility;
-	private DateTimeUtil dateTimeUtil;
-	
-	 @Before
-public void setUp(){
-		 mockDateTime = new MockDateTime(null);
-}
-	 
-	 
 
-@Test
-public void fakeIttest() throws Exception {
- 
-	//assertEquals(12/4/2015, dateTimeUtility.now());//today());
-	
-	   
-}
+	private DateUtil dateUtil;
+	private DateUtility dateUtility;
+
+	@Before
+	public void setUp() {
+		dateUtil = new DateUtil();
+	}
+
+	@Test
+	public void dateFormattest() throws Exception {
+
+		dateUtil.dateFormat("2015-12-12", 231);
+
+	}
+
+	@Test
+	public void datetimenowtest() throws Exception {
+
+		dateUtil.datetimenow();
+
+	}
+
+	@Test
+	public void tryParsetest() throws Exception {
+
+		LocalDate defaultValue = null;
+		dateUtil.tryParse("value", defaultValue);
+
+	}
+
+	@Test
+	public void localDatetest() throws Exception {
+
+		dateUtil.today();
+
+	}
+
+	@Test
+	public void millistest() throws Exception {
+
+		dateUtil.millis();
+
+	}
 
 }

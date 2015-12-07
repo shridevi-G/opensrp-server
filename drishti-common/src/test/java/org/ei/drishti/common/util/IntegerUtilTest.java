@@ -3,7 +3,7 @@ package org.ei.drishti.common.util;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class IntegerUtilTest {
 	private IntegerUtil integerUtil;
@@ -24,6 +24,7 @@ public class IntegerUtilTest {
     public void parseValidIntegersAndDefaultInvalidOnesToEmptyStringtest() throws Exception {
      
         assertEquals("3", IntegerUtil.parseValidIntegersAndDefaultInvalidOnesToEmptyString("3"));
+        assertNotNull("null", IntegerUtil.parseValidIntegersAndDefaultInvalidOnesToEmptyString("null1"));
         
   }
 }
