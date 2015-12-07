@@ -6,7 +6,7 @@ public class MetricTest {
 	
 	 @Test
 	    public void metrictest() {
-	    //    Metric o = null;
+	  
 		 
 		 
 	
