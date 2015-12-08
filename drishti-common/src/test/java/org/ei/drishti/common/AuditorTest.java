@@ -77,6 +77,7 @@ public class AuditorTest extends BaseUnitTest {
         assertThat(newMessages.size(), is(2));
         assertData(newMessages.get(0), is("Message 4"));
         assertData(newMessages.get(1), is("Message 5"));
+        
     }
 
     @Test
