@@ -4,17 +4,22 @@ import org.junit.Test;
 
 public class EasyMapTest {
 	
-	private EasyMap easyMap;
+private DateTimeUtil dateTimeUtil;
 	
-@Before
-public void setUp(){
-		 easyMap = new EasyMap();
-}
+	@Before 
+	public void setUp(){
+	dateTimeUtil = new DateTimeUtil();
+	}
 	
-@Test
-public void test() throws Exception {
+	/*@Test
+	public void fakeItTest(){
+		LocalDateTime fakeDateTime = null;
+		dateTimeUtil.fakeIt(fakeDateTime);
+	}*/
 	
-}
-
+	@Test
+	public void nowTest(){
+		dateTimeUtil.now();
+	}
 
 }
