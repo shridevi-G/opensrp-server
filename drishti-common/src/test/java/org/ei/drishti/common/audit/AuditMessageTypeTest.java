@@ -15,5 +15,6 @@ public class AuditMessageTypeTest {
 
         assertThat(NORMAL.supports("data"), is(true));
         assertThat(NORMAL.supports("someOtherField"), is(false));
+              
     }
 }

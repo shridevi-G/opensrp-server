@@ -68,4 +68,9 @@ public class AllLocationsRepository {
         return dataAccessTemplate.findByNamedQueryAndNamedParam(HealthCenter.FIND_BY_ID,
                 new String[]{"id"}, new Object[]{id});
     }
+    
+    public ANMVillages fetchLocationByANMIdentifier(String anmIdentifier) {
+        return (ANMVillages) dataAccessTemplate.findByNamedQueryAndNamedParam(ANMVillages.FIND_BY_USER_ID,
+                new String[]{"anmIdentifier"}, new Object[]{anmIdentifier}).get(0);
+    }
 }

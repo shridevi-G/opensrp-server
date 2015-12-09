@@ -38,16 +38,19 @@ public class FormDatahandler {
     String phoneNumber = "";
     String village = "";
     String registrationDate = "";
-
+  
     @Autowired
-    public void FormDataHandler(DateUtil dateUtil, ANCVisitRepository ancVisitRepository, ANMService anmService, SMSController smsController, VisitService visitService) {
-        this.ancVisitRepository = ancVisitRepository;
-        this.smsController = smsController;
-        this.anmService = anmService;
-        this.visitService = visitService;
-        this.dateUtil = dateUtil;
-
-    }
+    public FormDatahandler(DateUtil dateUtil2,
+			ANCVisitRepository ancVisitRepository2, ANMService anmService2,
+			SMSController smsController2, VisitService visitService2) {
+    	
+    	this.dateUtil = dateUtil2;
+    	this.ancVisitRepository = ancVisitRepository2;
+    	 this.anmService = anmService2;
+        this.smsController = smsController2;
+         this.visitService = visitService2;
+      
+	}
 
     public void ecRegistration(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
         String entityId = dataObject.getString("entityId");
@@ -441,7 +444,7 @@ public class FormDatahandler {
         String ecId = "";
         String deliveryType = "";
         Integer weight = 0;
-        Integer child_weight = 0;
+        Integer child_weight=0;
         String anmid = dataObject.getString("anmId");
         String entityId = dataObject.getString("entityId");
         logger.info("pnc registration");
@@ -451,8 +454,11 @@ public class FormDatahandler {
         logger.info("sbform [0]:  " + subfieldJsonArray);
         JSONArray subfieldJsonArr = subfieldJsonArray.getJSONObject(0).getJSONArray("instances");
         logger.info("instances [0]:  " + subfieldJsonArr);
-        child_weight = subfieldJsonArr.getJSONObject(0).getInt("weight");
-
+        logger.info("weight child:  " + subfieldJsonArr.getJSONObject(0).getString("weight"));
+        if(!subfieldJsonArr.getJSONObject(0).getString("weight").equalsIgnoreCase("")){
+        String chiweight=subfieldJsonArr.getJSONObject(0).getString("weight");
+            child_weight=Integer.parseInt(chiweight);
+        }
         logger.info("weight [0]:  " + child_weight);
 
         for (int i = 0; i < fieldJsonArray.length(); ++i) {

@@ -1,6 +1,7 @@
 package org.ei.drishti.reporting.repository.it;
 
 import org.ei.drishti.reporting.repository.TestServiceProvidedDataAccessTemplate;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,4 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ServicesProvidedIntegrationTestBase {
     @Autowired
     protected TestServiceProvidedDataAccessTemplate template;
+    
+    @Test
+    public void test(){
+    	
+    }
 }
