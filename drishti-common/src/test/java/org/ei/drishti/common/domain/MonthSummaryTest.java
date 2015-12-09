@@ -1,8 +1,4 @@
 package org.ei.drishti.common.domain;
-
-import static org.junit.Assert.assertEquals;
-
-import org.ei.drishti.common.util.HttpResponse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +15,6 @@ public void monthtest() throws Exception {
 	 
 	monthSummary.month();
 }
-
 
 @Test
 public void yeartest() throws Exception {

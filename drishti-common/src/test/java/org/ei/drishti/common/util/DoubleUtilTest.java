@@ -1,5 +1,4 @@
 package org.ei.drishti.common.util;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

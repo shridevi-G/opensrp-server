@@ -1,5 +1,4 @@
 package org.ei.drishti.common.util;
-
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +6,7 @@ import org.junit.Test;
 public class DateUtilTest {
 
 	private DateUtil dateUtil;
-	private DateUtility dateUtility;
+	
 
 	@Before
 	public void setUp() {

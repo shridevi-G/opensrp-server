@@ -1,6 +1,4 @@
 package org.ei.drishti.common.util;
-
-import org.ei.drishti.common.monitor.Monitor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,8 +30,7 @@ public class ANMIndicatorSummaryFactoryTest {
 		   anmindicatorSummaryFactory.createSummaryForANC();
 		  
 	   }
-	   
-	   
+	 
 	   @Test
 	   public void createSummaryForCondomtest() throws Exception {
 		 

@@ -1,5 +1,4 @@
 package org.ei.drishti.common.domain;
-
 import org.junit.Before;
 import org.junit.Test;
 

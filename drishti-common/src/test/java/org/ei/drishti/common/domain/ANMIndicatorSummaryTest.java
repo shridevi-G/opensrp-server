@@ -1,8 +1,4 @@
 package org.ei.drishti.common.domain;
-
-import static org.junit.Assert.assertEquals;
-
-import org.ei.drishti.common.util.IntegerUtil;
 import org.junit.Before;
 import org.junit.Test;
 
