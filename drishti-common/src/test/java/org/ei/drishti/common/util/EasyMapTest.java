@@ -4,22 +4,42 @@ import org.junit.Test;
 
 public class EasyMapTest {
 	
-private DateTimeUtil dateTimeUtil;
+private EasyMap easyMap;
 	
 	@Before 
 	public void setUp(){
-	dateTimeUtil = new DateTimeUtil();
+		easyMap = new EasyMap();
+	}
+	
+	@Test
+	public void EasyMapTest(){
+		easyMap.map();
+	}
+	
+	@Test
+	public void mapOfTest(){
+		Object value = null;
+		Object key = null;
+		easyMap.mapOf(key, value);
+	}
+
+	@Test
+	public void createTest(){
+		Object value = null;
+		Object key = null;
+		easyMap.create(key, value);
+	}
+	
+	@Test
+	public void putTest(){
+		Object value = null;
+		Object key = null;
+		easyMap.put(key, value);
 	}
 	
 	/*@Test
-	public void fakeItTest(){
-		LocalDateTime fakeDateTime = null;
-		dateTimeUtil.fakeIt(fakeDateTime);
+	public void putAllTest(){
+		Map map = null;
+		easyMap.putAll(map);
 	}*/
-	
-	@Test
-	public void nowTest(){
-		dateTimeUtil.now();
-	}
-
 }
