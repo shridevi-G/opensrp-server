@@ -105,6 +105,12 @@ public class FormDataController {
                 formDataHandler.ancEdit(dataObject, anmphoneNumber);
 
             }
+            if (visittype.equalsIgnoreCase("child_immunizations")) {
+                logger.info("visit type" + visittype);
+
+                formDataHandler.childImmunization(dataObject, visittype);
+
+            }
 
             if (visittype.equalsIgnoreCase("child_registration_ec")
                     || visittype.equalsIgnoreCase("child_registration_oa")) {
