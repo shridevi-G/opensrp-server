@@ -181,14 +181,15 @@ public class FormDatahandlerTest {
 				"visitdate", "anmid");
 		when(visitService.getVisitDue("ecid")).thenReturn(asList(ancvisitDue));
 	
-//		smsController.sendSMSPNC("", "EC","","");
-//    verify(smsController).sendSMSPNC("", "EC","","");
-//    formDatahandler.pncRegistration(dataobject, "pnc_registration_oa", "12645");
-//    formDatahandler.pncRegistration(dataobject, "delivery_outcome", "12645");
-//    
-//    smsController.sendSMSPNC("entity", "2334", "12345", "sdaf");
-//	verify(smsController).sendSMSPNC("entity", "2334", "12345", "sdaf");
-//	
+	//	smsController.sendSMSPNC("", "EC","","");
+    //verify(smsController).sendSMSPNC("", "EC","","");
+  formDatahandler.pncRegistration(dataobject, "pnc_registration_oa", "12645");
+ //  formDatahandler.pncRegistration(dataobject, "delivery_outcome", "12645");
+    
+    smsController.sendSMSPNC("entity", "2334", "12345", "sdaf");
+	verify(smsController).sendSMSPNC("entity", "2334", "12345", "sdaf");
+
+		
 	}
 	
 	@Test
@@ -196,19 +197,16 @@ public class FormDatahandlerTest {
 		
 		JSONObject dataobject = data();
 		
-		ANCVisitDue ancvisitDue = new ANCVisitDue("ecId", "patientnum",
-				"anmnum", "visittype", 12312, "lmpdate", "womenname",
-				"visitdate", "anmid");
-		when(visitService.getVisitDue("ecId")).thenReturn(asList(ancvisitDue));;
+	
+		ANCVisitDue ancvisitdue = new ANCVisitDue(12, "entityid", "patientnum","32434", "visittype", 12312, "lmpdate", "womenname","visitdate", "anmid");
+		when(visitService.getVisitDue("ecId")).thenReturn(asList(ancvisitdue));;
+	
+	VisitConf visitconf = new VisitConf("8", "10", "15", "20");
+		when(visitService.getVisitconf()).thenReturn(asList(visitconf));
+		when(dateUtil.dateFormat("datetime", 32)).thenReturn(("12/7/2015"));
 		
-		
-		
-//		VisitConf visitconf = new VisitConf("8", "10", "15", "20");
-//		when(visitService.getVisitconf()).thenReturn(asList(visitconf));
-		
-//		formDatahandler.ancVisit(dataobject, "anc_visist","32434");
-		
-		
+	formDatahandler.ancVisit(dataobject, "anc_visist","32434");
+
 	}
 
 
@@ -240,8 +238,6 @@ public class FormDatahandlerTest {
 
 	}
 	
-	
-	
 	@Test
 	public void recordECPtest() throws Exception {
 		
@@ -257,9 +253,6 @@ public class FormDatahandlerTest {
 		formDatahandler.ttData(dataobject, "anc_registration");
 		
 	}
-	
-	
-
 	
 
 }
