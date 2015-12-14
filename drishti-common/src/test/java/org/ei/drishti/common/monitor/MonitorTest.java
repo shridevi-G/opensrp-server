@@ -1,13 +1,11 @@
 package org.ei.drishti.common.monitor;
-
-import static org.junit.Assert.assertEquals;
-
-import org.ei.drishti.common.util.DoubleUtil;
 import org.junit.Before;
 import org.junit.Test;
 
 public class MonitorTest {
 	private Monitor monitor;
+	private Metric metric;
+	private Probe probe;
 	
 	 @Before
     public void setUp(){
@@ -15,12 +13,10 @@ public class MonitorTest {
     }
 
    @Test
-   public void addObservationFortest() throws Exception {
-	   
-	   
-	   
-	//   assertEquals(,monitor.addObservationFor(metric, value);//body()); 
-	   
+   public void starttest() throws Exception {
+	 
+	   monitor.start(metric);;
+	
    }
-
-}
+  
+  }

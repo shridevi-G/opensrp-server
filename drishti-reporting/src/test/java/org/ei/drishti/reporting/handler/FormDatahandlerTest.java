@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class FormDatahandlerTest {
-	
+
 	@Mock
 	private SMSController smsController;
 	@Mock
@@ -53,9 +53,10 @@ public class FormDatahandlerTest {
 
 	@Before
 	public void setUp() {
-        initMocks(this);
-		formDatahandler = new FormDatahandler(dateUtil, ancVisitRepository,anmService, smsController, visitService);
-			
+		initMocks(this);
+		formDatahandler = new FormDatahandler(dateUtil, ancVisitRepository,
+				anmService, smsController, visitService);
+
 	}
 
 	public static JSONObject data() throws JSONException {
@@ -101,7 +102,7 @@ public class FormDatahandlerTest {
 		formDatahandler.ecRegistration(dataobject, "12645");
 		verify(smsController).sendSMSEC("", "", "", "EC");
 		verify(ancVisitRepository).ecinsert("entity", "");
-	
+
 	}
 
 	@Test
@@ -109,13 +110,14 @@ public class FormDatahandlerTest {
 
 		JSONObject dataobject = data();
 		EcRegDetails ecRegDetails = new EcRegDetails(1, "entity", "213");
-		when(anmService.getPhoneNumber("entity")).thenReturn(asList(ecRegDetails));
+		when(anmService.getPhoneNumber("entity")).thenReturn(
+				asList(ecRegDetails));
 		formDatahandler.ecEdit(dataobject, "ptphoneNumber");
 		ancVisitRepository.ecUpdate(1, "213");
 		verify(ancVisitRepository).ecUpdate(1, "213");
 
 	}
-		
+
 	@Test
 	public void ancRegistrationtest() throws JSONException {
 
@@ -136,13 +138,14 @@ public class FormDatahandlerTest {
 				2312, "sdf", "ewqr", "12/7/2015", "anm123");
 
 	}
-	
-	
+
 	@Test
 	public void ancEdittest() throws Exception {
 
 		JSONObject dataobject = data();
-		ANCVisitDue ancvisitdue = new ANCVisitDue(12, "entityid", "patientnum","anmnum", "visittype", 12312, "lmpdate", "womenname","visitdate", "anmid");
+		ANCVisitDue ancvisitdue = new ANCVisitDue(12, "entityid", "patientnum",
+				"anmnum", "visittype", 12312, "lmpdate", "womenname",
+				"visitdate", "anmid");
 		when(visitService.getVisitDue("entity"))
 				.thenReturn(asList(ancvisitdue));
 		formDatahandler.ancEdit(dataobject, "phoneNumber");
@@ -150,8 +153,7 @@ public class FormDatahandlerTest {
 		verify(ancVisitRepository).ancregUpdate(12, "213");
 
 	}
-	
-	
+
 	@Test
 	public void childRegistrationtest() throws Exception {
 		String visittype = "child_registration_oa";
@@ -159,18 +161,19 @@ public class FormDatahandlerTest {
 		EcRegDetails ecRegDetails = new EcRegDetails("entity", "213");
 		when(anmService.getPhoneNumber("entity")).thenReturn(
 				asList(ecRegDetails));
-		
+
 		smsController.sendSMSChild("", "EC");
-	    verify(smsController).sendSMSChild("", "EC");
-	formDatahandler.childRegistration(dataobject, "child_registration_oa","SDF");
-	formDatahandler.childRegistration(dataobject, "child_registration_ec","SD");
-	ancVisitRepository.insert("entity", "2334", "12345", "sdaf", 2312,
-			"sdf", "ewqr", "12/7/2015", "anm123");
-	verify(ancVisitRepository).insert("entity", "2334", "12345", "sdaf", 2312,
-			"sdf", "ewqr", "12/7/2015", "anm123");
+		verify(smsController).sendSMSChild("", "EC");
+		formDatahandler.childRegistration(dataobject, "child_registration_oa",
+				"SDF");
+		formDatahandler.childRegistration(dataobject, "child_registration_ec",
+				"SD");
+		ancVisitRepository.insert("entity", "2334", "12345", "sdaf", 2312,
+				"sdf", "ewqr", "12/7/2015", "anm123");
+		verify(ancVisitRepository).insert("entity", "2334", "12345", "sdaf",
+				2312, "sdf", "ewqr", "12/7/2015", "anm123");
 
 	}
-	
 
 	@Test
 	public void pncRegistrationtest() throws Exception {
@@ -180,86 +183,82 @@ public class FormDatahandlerTest {
 				"anmnum", "visittype", 12312, "lmpdate", "womenname",
 				"visitdate", "anmid");
 		when(visitService.getVisitDue("ecid")).thenReturn(asList(ancvisitDue));
-	
-//		smsController.sendSMSPNC("", "EC","","");
-//    verify(smsController).sendSMSPNC("", "EC","","");
-//    formDatahandler.pncRegistration(dataobject, "pnc_registration_oa", "12645");
-//    formDatahandler.pncRegistration(dataobject, "delivery_outcome", "12645");
-//    
-//    smsController.sendSMSPNC("entity", "2334", "12345", "sdaf");
-//	verify(smsController).sendSMSPNC("entity", "2334", "12345", "sdaf");
-//	
-	}
-	
-	@Test
-	public void ancVisittest() throws Exception {
-		
-		JSONObject dataobject = data();
-		
-		ANCVisitDue ancvisitDue = new ANCVisitDue("ecId", "patientnum",
-				"anmnum", "visittype", 12312, "lmpdate", "womenname",
-				"visitdate", "anmid");
-		when(visitService.getVisitDue("ecId")).thenReturn(asList(ancvisitDue));;
-		
-		
-		
-//		VisitConf visitconf = new VisitConf("8", "10", "15", "20");
-//		when(visitService.getVisitconf()).thenReturn(asList(visitconf));
-		
-//		formDatahandler.ancVisit(dataobject, "anc_visist","32434");
-		
-		
+
+		// smsController.sendSMSPNC("", "EC","","");
+		// verify(smsController).sendSMSPNC("", "EC","","");
+
+		formDatahandler.pncRegistration(dataobject, "pnc_registration_oa",
+				"12645");
+
+		// formDatahandler.pncRegistration(dataobject, "delivery_outcome",
+		// "12645");
+
+		smsController.sendSMSPNC("entity", "2334", "12345", "sdaf");
+		verify(smsController).sendSMSPNC("entity", "2334", "12345", "sdaf");
+
 	}
 
+	@Test
+	public void ancVisittest() throws Exception {
+
+		JSONObject dataobject = data();
+
+		ANCVisitDue ancvisitdue = new ANCVisitDue(12, "entityid", "patientnum",
+				"32434", "visittype", 12312, "lmpdate", "womenname",
+				"visitdate", "anmid");
+		when(visitService.getVisitDue("ecId")).thenReturn(asList(ancvisitdue));
+		;
+
+		VisitConf visitconf = new VisitConf("8", "10", "15", "20");
+		when(visitService.getVisitconf()).thenReturn(asList(visitconf));
+		when(dateUtil.dateFormat("datetime", 32)).thenReturn(("12/7/2015"));
+
+		formDatahandler.ancVisit(dataobject, "anc_visist", "32434");
+
+	}
 
 	@Test
 	public void visitpoctest() throws Exception {
-	String visittype = "Subcenter";
+		String visittype = "Subcenter";
 		JSONObject dataobject = data();
-		
+
 		formDatahandler.visitpoc(dataobject, "Subcenter", "12645");
-		
+
 		ANMVillages anmvillages = new ANMVillages("villages", "user_role",
 				"user_id", "name", "phone_number", 233, 324, 324, 324, 243,
 				32432);
-	  		when(anmService.getANMVillages("anm123")).thenReturn(
+		when(anmService.getANMVillages("anm123")).thenReturn(
 				asList(anmvillages));
-		
-	  		HealthCenter healthCenter =new HealthCenter(234234,"hospital_name", "hospital_type", "hospital_address","parent_hospital","villages",
-	    		324,324,324,23234);
-		
-		when(anmService.getPHCDetails(243)).thenReturn(
-				asList(healthCenter));
+
+		HealthCenter healthCenter = new HealthCenter(234234, "hospital_name",
+				"hospital_type", "hospital_address", "parent_hospital",
+				"villages", 324, 324, 324, 23234);
+
+		when(anmService.getPHCDetails(243)).thenReturn(asList(healthCenter));
 		formDatahandler.visitpoc(dataobject, "Subcenter", "12645");
 		formDatahandler.visitpoc(dataobject, "anc_visit", "1265");
-		
+
 		ancVisitRepository.insert("entity", "2334", "12345", "sdaf", 2312,
 				"sdf", "ewqr", "12/7/2015", "anm123");
-	    verify(ancVisitRepository).insert("entity", "2334", "12345", "sdaf", 2312,
-				"sdf", "ewqr", "12/7/2015", "anm123");
+		verify(ancVisitRepository).insert("entity", "2334", "12345", "sdaf",
+				2312, "sdf", "ewqr", "12/7/2015", "anm123");
 
 	}
-	
-	
-	
+
 	@Test
 	public void recordECPtest() throws Exception {
-		
+
 		JSONObject dataobject = data();
 		formDatahandler.recordECP(dataobject, "anc_registration");
-		
+
 	}
-	
+
 	@Test
 	public void ttDatatest() throws Exception {
-		
+
 		JSONObject dataobject = data();
 		formDatahandler.ttData(dataobject, "anc_registration");
-		
-	}
-	
-	
 
-	
+	}
 
 }
