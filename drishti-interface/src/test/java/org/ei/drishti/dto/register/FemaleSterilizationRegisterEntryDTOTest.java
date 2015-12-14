@@ -1,175 +1,182 @@
 package org.ei.drishti.dto.register;
-
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-public class CondomRegisterEntryDTOTest {
-	
+public class FemaleSterilizationRegisterEntryDTOTest {
 
-	
-	private CondomRegisterEntryDTO condomRegister;
-	
-	@Before
+	private FemaleSterilizationRegisterEntryDTO femaleSterilization;
+	@Before 
 	public void setUp(){
-		condomRegister=new CondomRegisterEntryDTO();
+		femaleSterilization = new FemaleSterilizationRegisterEntryDTO();
 	}
 	@Test
 	public void ecNumberTest(){
-		String w=condomRegister.ecNumber();
+		String w=femaleSterilization.ecNumber();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void wifeNameTest(){
-		String w=condomRegister.wifeName();
+		String w=femaleSterilization.wifeName();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void husbandNameTest(){
-		String w=condomRegister.husbandName();
+		String w=femaleSterilization.husbandName();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void villageTest(){
-		String w=condomRegister.village();
+		String w=femaleSterilization.village();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void subCenterTest(){
-		String w=condomRegister.subCenter();
+		String w=femaleSterilization.subCenter();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void wifeAgeTest(){
-		String w=condomRegister.wifeAge();
+		String w=femaleSterilization.wifeAge();
+		String a=null;
+		assertEquals(w,a);
+	}
+	@Test
+	public void husbandAgeTest(){
+		String w=femaleSterilization.husbandAge();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void casteTest(){
-		String w=condomRegister.caste();
+		String w=femaleSterilization.caste();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void religionTest(){
-		String w=condomRegister.religion();
+		String w=femaleSterilization.religion();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void numberOfLivingMaleChildrenTest(){
-		String w=condomRegister.numberOfLivingMaleChildren();
+		String w=femaleSterilization.numberOfLivingMaleChildren();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void numberOfLivingFemaleChildrenTest(){
-		String w=condomRegister.numberOfLivingFemaleChildren();
+		String w=femaleSterilization.numberOfLivingFemaleChildren();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void wifeEducationLevelTest(){
-		String w=condomRegister.wifeEducationLevel();
+		String w=femaleSterilization.wifeEducationLevel();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void husbandEducationLevelTest(){
-		String w=condomRegister.husbandEducationLevel();
+		String w=femaleSterilization.husbandEducationLevel();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void fpDetailsTest(){
-		CondomFPDetailsDTO w=condomRegister.fpDetails();
+		FemaleSterilizationFPDetailsDTO w=femaleSterilization.fpDetails();
 		String a=null;
 		assertEquals(w,a);
 	}
 	@Test
 	public void withEcNumberTest(){
-		CondomRegisterEntryDTO w=condomRegister.withEcNumber("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withEcNumber("test");
 		String l=w.ecNumber();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withWifeNameTest(){
-		CondomRegisterEntryDTO w=condomRegister.withWifeName("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withWifeName("test");
 		String l=w.wifeName();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withHusbandNameTest(){
-		CondomRegisterEntryDTO w=condomRegister.withHusbandName("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withHusbandName("test");
 		String l=w.husbandName();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withVillageTest(){
-		CondomRegisterEntryDTO w=condomRegister.withVillage("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withVillage("test");
 		String l=w.village();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withSubCenterTest(){
-		CondomRegisterEntryDTO w=condomRegister.withSubCenter("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withSubCenter("test");
 		String l=w.subCenter();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withWifeAgeTest(){
-		CondomRegisterEntryDTO w=condomRegister.withWifeAge("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withWifeAge("test");
 		String l=w.wifeAge();
 		assertEquals(l,"test");
-	}
+		}
+	@Test
+	public void withHusbandAgeTest(){
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withHusbandAge("test");
+		String l=w.husbandAge();
+		assertEquals(l,"test");
+		}
 	@Test
 	public void withCasteTest(){
-		CondomRegisterEntryDTO w=condomRegister.withCaste("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withCaste("test");
 		String l=w.caste();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withReligionTest(){
-		CondomRegisterEntryDTO w=condomRegister.withReligion("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withReligion("test");
 		String l=w.religion();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withNumberOfLivingMaleChildrenTest(){
-		CondomRegisterEntryDTO w=condomRegister.withNumberOfLivingMaleChildren("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withNumberOfLivingMaleChildren("test");
 		String l=w.numberOfLivingMaleChildren();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withNumberOfLivingFemaleChildrenTest(){
-		CondomRegisterEntryDTO w=condomRegister.withNumberOfLivingFemaleChildren("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withNumberOfLivingFemaleChildren("test");
 		String l=w.numberOfLivingFemaleChildren();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withWifeEducationLevelTest(){
-		CondomRegisterEntryDTO w=condomRegister.withWifeEducationLevel("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withWifeEducationLevel("test");
 		String l=w.wifeEducationLevel();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withHusbandEducationLevelTest(){
-		CondomRegisterEntryDTO w=condomRegister.withHusbandEducationLevel("test");
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withHusbandEducationLevel("test");
 		String l=w.husbandEducationLevel();
 		assertEquals(l,"test");
-	}
+		}
 	@Test
 	public void withFpDetailsTest(){
-		CondomFPDetailsDTO a = null;
-		CondomRegisterEntryDTO w=condomRegister.withFpDetails(a);
-		CondomFPDetailsDTO l=w.fpDetails();
+		FemaleSterilizationFPDetailsDTO a = null;
+		FemaleSterilizationRegisterEntryDTO w=femaleSterilization.withFpDetails(a);
+		FemaleSterilizationFPDetailsDTO l=w.fpDetails();
 		assertEquals(l,a);
-	}
-
+		}
 }
