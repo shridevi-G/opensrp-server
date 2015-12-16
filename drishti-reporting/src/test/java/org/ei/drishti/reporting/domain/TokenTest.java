@@ -1,64 +1,47 @@
 package org.ei.drishti.reporting.domain;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class TokenTest {
-
 	
 	private Token token;
-	 @Before
-public void setUp(){
-		 token = new Token("anc_visit1_from_week","anc_visit2_from_week");
-}
-
-@Test
-public void idtest() throws Exception {
 	
-	token.id();
-
-}
-
-@Test
-public void nametest() throws Exception {
+	@Before
+	public void setUp(){
+		String name = null;
+		String value = null;
+		token = new Token(name, value);
+	}
 	
-	token.name();
-
-}
-
-@Test
-public void withValuetest() throws Exception {
+	@Test
+	public void idTest(){
+		Integer s = null;
+		Integer w = token.id();
+		assertEquals(w,s);
+	}
 	
-	token.withValue(null);
-
-}
-
-@Test
-public void valuetest() throws Exception {
+	@Test
+	public void nameTest(){
+		String s = null;
+		String w = token.name();
+		assertEquals(w,s);
+	}
 	
-	token.value();
-
-}
-
-
-@Test
-public void equalstest() throws Exception {
+	@Test
+	public void valueTest(){
+		String s = null;
+		String w = token.value();
+		assertEquals(w,s);
+	}
 	
-	token.equals(token);
+	@Test
+	public void withValueTest(){
+		String s = null;
+		String w = token.value();
+		assertEquals(w,s);
+	}
 
-}
-
-@Test
-public void hashCodetest() throws Exception {
-	
-	token.hashCode();
-
-}
-
-@Test
-public void toStringtest() throws Exception {
-	
-	token.toString();
-
-}
 }

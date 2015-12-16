@@ -5,27 +5,28 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ServiceProviderTypeTest {
+public class ANMTest {
 	
-	private ServiceProviderType serviceProviderType;
+private ANM anm;
 	
 	@Before
 	public void setUp(){
-		String type = null;
-		serviceProviderType = new ServiceProviderType(type);
+		String anmIdentifier = null;
+		Integer id = null;
+		anm = new ANM(id, anmIdentifier);
 	}
 	
 	@Test
 	public void idTest(){
 		Integer s = null;
-		Integer w = serviceProviderType.id();
+		Integer w = anm.id();
 		assertEquals(w,s);
 	}
 	
 	@Test
-	public void typeTest(){
+	public void anmIdentifierTest(){
 		String s = null;
-		String w = serviceProviderType.type();
+		String w = anm.anmIdentifier();
 		assertEquals(w,s);
 	}
 
