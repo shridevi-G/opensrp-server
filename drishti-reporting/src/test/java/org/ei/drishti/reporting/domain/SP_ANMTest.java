@@ -1,63 +1,49 @@
 package org.ei.drishti.reporting.domain;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class SP_ANMTest {
 	
-	private SP_ANM spanm;
-	 @Before
-public void setUp(){
-		 spanm = new SP_ANM("sadf","sdaf","sadf",324);
-}
-
-@Test
-public void idtest() throws Exception {
+	private SP_ANM sp_ANM;
 	
-	spanm.id();
-
-}
-
-@Test
-public void nametest() throws Exception {
+	@Before
+	public void setUp(){
+		String identifier = null;
+		String name = null;
+		String subCenter = null;
+		Integer phcId = null;
+		sp_ANM = new SP_ANM(identifier, name, subCenter, phcId);
+	}
 	
-	spanm.name();
-
-}
-
-@Test
-public void equalstest() throws Exception {
+	@Test
+	public void idTest(){
+		Integer s = null;
+		Integer w = sp_ANM.id();
+		assertEquals(w,s);
+	}
 	
-	spanm.equals(spanm);
-
-}
-
-@Test
-public void hashCodetest() throws Exception {
+	@Test
+	public void identifierTest(){
+		String s = null;
+		String w = sp_ANM.identifier();
+		assertEquals(w,s);
+	}
 	
-	spanm.hashCode();
-
-}
-
-
-@Test
-public void toStringtest() throws Exception {
+	@Test
+	public void nameTest(){
+		String s = null;
+		String w = sp_ANM.name();
+		assertEquals(w,s);
+	}
 	
-	spanm.toString();
+	@Test
+	public void subCenterTest(){
+		String s = null;
+		String w = sp_ANM.subCenter();
+		assertEquals(w,s);
+	}
 
-}
-
-@Test
-public void identifiertest() throws Exception {
-	
-	spanm.identifier();
-
-}
-
-@Test
-public void subCentertest() throws Exception {
-	
-	spanm.subCenter();
-
-}
 }
