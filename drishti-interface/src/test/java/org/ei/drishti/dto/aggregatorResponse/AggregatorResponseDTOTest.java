@@ -24,4 +24,22 @@ public class AggregatorResponseDTOTest {
 		assertEquals(w,a);
 	}
 	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= aggregatorres.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		aggregatorres.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		aggregatorres.toString();
+	}
+	
 }

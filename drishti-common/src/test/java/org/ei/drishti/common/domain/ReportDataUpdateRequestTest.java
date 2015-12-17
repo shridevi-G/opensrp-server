@@ -54,4 +54,22 @@ public class ReportDataUpdateRequestTest {
 		List<ReportingData> reportingData = null;
 		reportDataUpdateRequest.withReportingData(reportingData);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= reportDataUpdateRequest.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		reportDataUpdateRequest.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		reportDataUpdateRequest.toString();
+	}
 }

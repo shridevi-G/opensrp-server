@@ -8,7 +8,8 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class AuditMessageTypeTest {
-    @Test
+    
+	@Test
     public void shouldKnowWhichFieldsAreSupportedByAGivenTypeOfMessage() {
         assertThat(SMS.supports("message"), is(true));
         assertThat(SMS.supports("someRandomField"), is(false));

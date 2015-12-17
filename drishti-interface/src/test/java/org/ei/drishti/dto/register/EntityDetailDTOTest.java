@@ -65,4 +65,22 @@ public class EntityDetailDTOTest {
 		assertEquals(l,"test");
 	}
 	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= entityDetails.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		entityDetails.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		entityDetails.toString();
+	}
+	
 }
