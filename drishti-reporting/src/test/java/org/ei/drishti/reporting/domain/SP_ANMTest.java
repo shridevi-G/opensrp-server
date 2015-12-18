@@ -45,5 +45,23 @@ public class SP_ANMTest {
 		String w = sp_ANM.subCenter();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= sp_ANM.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		sp_ANM.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		sp_ANM.toString();
+	}
 
 }

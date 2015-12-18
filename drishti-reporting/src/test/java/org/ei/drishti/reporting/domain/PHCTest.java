@@ -37,5 +37,23 @@ public class PHCTest {
 		String w = phc.name();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= phc.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		phc.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		phc.toString();
+	}
 
 }

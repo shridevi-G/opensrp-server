@@ -83,5 +83,23 @@ public class ServiceProvidedReportTest {
 		String w = serviceProvidedReport.state();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= serviceProvidedReport.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		serviceProvidedReport.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		serviceProvidedReport.toString();
+	}
 		
 }

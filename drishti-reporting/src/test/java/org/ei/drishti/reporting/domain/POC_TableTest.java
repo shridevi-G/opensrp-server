@@ -119,5 +119,23 @@ public class POC_TableTest {
 		String w = poc_Table.wifename();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= poc_Table.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		poc_Table.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		poc_Table.toString();
+	}
 
 }

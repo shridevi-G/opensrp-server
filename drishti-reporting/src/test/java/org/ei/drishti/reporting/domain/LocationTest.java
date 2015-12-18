@@ -48,5 +48,23 @@ public class LocationTest {
 		PHC w = location.phc();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= location.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		location.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		location.toString();
+	}
 		
 }

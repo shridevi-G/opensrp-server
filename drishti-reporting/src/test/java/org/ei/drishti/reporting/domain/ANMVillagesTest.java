@@ -110,5 +110,23 @@ public class ANMVillagesTest {
 		Integer w = anmVillages.hospital();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= anmVillages.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		anmVillages.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		anmVillages.toString();
+	}
 
 }

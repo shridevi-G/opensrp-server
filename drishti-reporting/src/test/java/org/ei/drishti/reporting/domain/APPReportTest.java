@@ -118,5 +118,23 @@ private APPReport appReport;
 		String w = appReport.visit_location();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= appReport.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		appReport.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		appReport.toString();
+	}
 
 }

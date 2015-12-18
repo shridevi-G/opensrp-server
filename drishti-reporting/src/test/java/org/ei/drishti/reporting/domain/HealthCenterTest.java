@@ -9,7 +9,7 @@ public class HealthCenterTest {
 	
 private HealthCenter healthCenter;
 	
-	@Before
+	/*@Before
 	public void setUp(){
 		Integer id = 0;
 		String hospital_name = null;
@@ -23,7 +23,25 @@ private HealthCenter healthCenter;
 		Integer subdistrict_name = null;
 		healthCenter = new HealthCenter(id, hospital_name, hospital_type, hospital_address, parent_hospital, villages,
 	    		country_name, county_name, district_name, subdistrict_name);
+	}*/
+
+
+	@Before
+	public void setUp(){
+		String hospital_name = null;
+		String hospital_type = null;
+		String hospital_address = null;
+		String parent_hospital = null;
+		String villages = null;
+		Integer country_name = null;
+		Integer county_name = null;
+		Integer district_name = null;
+		Integer subdistrict_name = null;
+		healthCenter = new HealthCenter(hospital_name, hospital_type, hospital_address, parent_hospital, villages,
+	    		country_name, county_name, district_name, subdistrict_name);
 	}
+
+
 	
 	@Test
 	public void idTest(){
@@ -93,6 +111,24 @@ private HealthCenter healthCenter;
 		String s = null;
 		Integer w = healthCenter.subdistrict_name();
 		assertEquals(w,s);
+	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= healthCenter.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		healthCenter.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		healthCenter.toString();
 	}
 
 }

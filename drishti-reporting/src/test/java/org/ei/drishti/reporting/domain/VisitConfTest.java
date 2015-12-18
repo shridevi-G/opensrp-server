@@ -53,5 +53,23 @@ public class VisitConfTest {
 		String w = visitConf.anc_visit4_from_week();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= visitConf.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		visitConf.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		visitConf.toString();
+	}
 
 }
