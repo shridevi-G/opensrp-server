@@ -27,5 +27,23 @@ private AnnualTarget annualTarget;
 		String w = annualTarget.target();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= annualTarget.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		annualTarget.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		annualTarget.toString();
+	}
 
 }

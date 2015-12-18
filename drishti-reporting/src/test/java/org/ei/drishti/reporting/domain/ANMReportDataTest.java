@@ -40,5 +40,23 @@ private ANMReportData anmReportData;
 		String w = anmReportData.externalId();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= anmReportData.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		anmReportData.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		anmReportData.toString();
+	}
 
 }

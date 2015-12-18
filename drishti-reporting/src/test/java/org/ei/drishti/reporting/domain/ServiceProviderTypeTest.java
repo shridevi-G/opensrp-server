@@ -28,5 +28,23 @@ public class ServiceProviderTypeTest {
 		String w = serviceProviderType.type();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= serviceProviderType.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		serviceProviderType.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		serviceProviderType.toString();
+	}
 
 }

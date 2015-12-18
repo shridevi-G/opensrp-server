@@ -114,5 +114,23 @@ public class ANCVisitDueTest {
 		String w = ancVisitDue.anmid();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= ancVisitDue.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		ancVisitDue.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		ancVisitDue.toString();
+	}
 
 }

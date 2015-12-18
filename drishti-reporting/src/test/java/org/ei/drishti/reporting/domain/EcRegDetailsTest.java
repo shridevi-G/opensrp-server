@@ -47,5 +47,23 @@ private EcRegDetails ecRegDetails;
 	public void setphonenumberTest(){
 		ecRegDetails.setphonenumber("phonenumber");
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= ecRegDetails.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		ecRegDetails.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		ecRegDetails.toString();
+	}
 
 }

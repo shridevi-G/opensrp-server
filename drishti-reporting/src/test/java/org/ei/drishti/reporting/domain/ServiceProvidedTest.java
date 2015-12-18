@@ -1,4 +1,4 @@
-/*package org.ei.drishti.reporting.domain;
+package org.ei.drishti.reporting.domain;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +23,33 @@ public class ServiceProvidedTest {
 				location, dristhiEntityId);
 	}
 	
+		
 	@Test
+	public void dristhiEntityIdTest(){
+		String s = null;
+		String w = serviceProvided.dristhiEntityId();
+		assertEquals(w,s);
+	}
+		
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= serviceProvided.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		serviceProvided.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		serviceProvided.toString();
+	}
+
+	/*@Test
 	public void idTest(){
 		String s = null;
 		String w = serviceProvided.id();
@@ -50,20 +76,11 @@ public class ServiceProvidedTest {
 		String w = serviceProvided.date();
 		assertEquals(w,s);
 	}
-	
-	@Test
-	public void dristhiEntityIdTest(){
-		String s = null;
-		String w = serviceProvided.dristhiEntityId();
-		assertEquals(w,s);
-	}
-	
+
 	@Test
 	public void locationTest(){
 		String s = null;
 		org.ei.drishti.domain.Location w = serviceProvided.location();
 		assertEquals(w,s);
-	}
-
+	}*/
 }
-*/

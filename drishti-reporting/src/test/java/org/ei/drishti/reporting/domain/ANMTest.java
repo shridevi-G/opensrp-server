@@ -29,5 +29,23 @@ private ANM anm;
 		String w = anm.anmIdentifier();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= anm.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		anm.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		anm.toString();
+	}
 
 }

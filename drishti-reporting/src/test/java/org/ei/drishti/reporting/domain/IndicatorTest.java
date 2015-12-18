@@ -28,5 +28,23 @@ public class IndicatorTest {
 		String w = indicator.indicator();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= indicator.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		indicator.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		indicator.toString();
+	}
 
 }

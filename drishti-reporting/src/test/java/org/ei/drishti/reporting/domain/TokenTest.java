@@ -43,5 +43,23 @@ public class TokenTest {
 		String w = token.value();
 		assertEquals(w,s);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= token.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		token.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		token.toString();
+	}
 
 }
