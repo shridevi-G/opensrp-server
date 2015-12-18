@@ -5,63 +5,66 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SP_ANMTest {
+public class LocationTest {
 	
-	private SP_ANM sp_ANM;
+	private Location location;
 	
 	@Before
 	public void setUp(){
-		String identifier = null;
-		String name = null;
+		Integer id = 0;
+		String village = null;
 		String subCenter = null;
-		Integer phcId = null;
-		sp_ANM = new SP_ANM(identifier, name, subCenter, phcId);
+		PHC phc = null;
+		String taluka = null;
+		String district = null;
+		String state = null;
+		location = new Location(id, village, subCenter, phc, taluka, district, state);
 	}
 	
 	@Test
 	public void idTest(){
-		Integer s = null;
-		Integer w = sp_ANM.id();
+		Integer s = 0;
+		Integer w = location.id();
 		assertEquals(w,s);
 	}
 	
 	@Test
-	public void identifierTest(){
+	public void villageTest(){
 		String s = null;
-		String w = sp_ANM.identifier();
-		assertEquals(w,s);
-	}
-	
-	@Test
-	public void nameTest(){
-		String s = null;
-		String w = sp_ANM.name();
+		String w = location.village();
 		assertEquals(w,s);
 	}
 	
 	@Test
 	public void subCenterTest(){
 		String s = null;
-		String w = sp_ANM.subCenter();
+		String w = location.subCenter();
+		assertEquals(w,s);
+	}
+	
+	@Test
+	public void phcTest(){
+		String s = null;
+		PHC w = location.phc();
 		assertEquals(w,s);
 	}
 	
 	@Test
 	public void equalsTest(){
 		Object o = null;
-		boolean t= sp_ANM.equals(o);
+		boolean t= location.equals(o);
 		boolean x = false;
 		assertEquals(t,x);
 	}
 
 	@Test
 	public void hashCodeTest() {
-		sp_ANM.hashCode();
+		location.hashCode();
 	}
 
 	@Test
 	public void toStringTest() {
-		sp_ANM.toString();
+		location.toString();
 	}
-
+		
 }

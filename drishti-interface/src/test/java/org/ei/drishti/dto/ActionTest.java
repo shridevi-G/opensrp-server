@@ -58,4 +58,22 @@ public class ActionTest {
 		assertEquals(w,a);
 	}
 	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= action.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		action.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		action.toString();
+	}
+	
 }

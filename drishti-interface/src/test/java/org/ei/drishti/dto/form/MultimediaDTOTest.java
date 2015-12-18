@@ -41,4 +41,22 @@ public class MultimediaDTOTest {
 		String a=null;
 		assertEquals(w,a);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= multimedia.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		multimedia.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		multimedia.toString();
+	}
 }

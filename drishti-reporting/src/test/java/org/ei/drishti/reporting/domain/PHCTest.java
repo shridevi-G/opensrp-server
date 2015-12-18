@@ -5,61 +5,55 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TokenTest {
+public class PHCTest {
 	
-	private Token token;
+	private PHC phc;
 	
 	@Before
 	public void setUp(){
+		Integer id = 0;
+		String phcIdentifier = null;
 		String name = null;
-		String value = null;
-		token = new Token(name, value);
+		phc = new PHC(id, phcIdentifier, name);
 	}
 	
 	@Test
 	public void idTest(){
-		Integer s = null;
-		Integer w = token.id();
+		Integer s = 0;
+		Integer w = phc.id();
+		assertEquals(w,s);
+	}
+	
+	@Test
+	public void phcIdentifierTest(){
+		String s = null;
+		String w = phc.phcIdentifier();
 		assertEquals(w,s);
 	}
 	
 	@Test
 	public void nameTest(){
 		String s = null;
-		String w = token.name();
-		assertEquals(w,s);
-	}
-	
-	@Test
-	public void valueTest(){
-		String s = null;
-		String w = token.value();
-		assertEquals(w,s);
-	}
-	
-	@Test
-	public void withValueTest(){
-		String s = null;
-		String w = token.value();
+		String w = phc.name();
 		assertEquals(w,s);
 	}
 	
 	@Test
 	public void equalsTest(){
 		Object o = null;
-		boolean t= token.equals(o);
+		boolean t= phc.equals(o);
 		boolean x = false;
 		assertEquals(t,x);
 	}
 
 	@Test
 	public void hashCodeTest() {
-		token.hashCode();
+		phc.hashCode();
 	}
 
 	@Test
 	public void toStringTest() {
-		token.toString();
+		phc.toString();
 	}
 
 }

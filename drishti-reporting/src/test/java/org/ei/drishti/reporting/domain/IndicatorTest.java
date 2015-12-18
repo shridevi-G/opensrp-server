@@ -1,50 +1,50 @@
 package org.ei.drishti.reporting.domain;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class ServiceProviderTypeTest {
+public class IndicatorTest {
 	
-	private ServiceProviderType serviceProviderType;
+	private Indicator indicator;
 	
 	@Before
 	public void setUp(){
-		String type = null;
-		serviceProviderType = new ServiceProviderType(type);
+		indicator = new Indicator(null, null);	
 	}
 	
 	@Test
-	public void idTest(){
+	public void idtest() {
 		Integer s = null;
-		Integer w = serviceProviderType.id();
+		Integer w = indicator.id();
 		assertEquals(w,s);
 	}
 	
 	@Test
-	public void typeTest(){
+	public void indicatortest() {
 		String s = null;
-		String w = serviceProviderType.type();
+		String w = indicator.indicator();
 		assertEquals(w,s);
 	}
 	
 	@Test
 	public void equalsTest(){
 		Object o = null;
-		boolean t= serviceProviderType.equals(o);
+		boolean t= indicator.equals(o);
 		boolean x = false;
 		assertEquals(t,x);
 	}
 
 	@Test
 	public void hashCodeTest() {
-		serviceProviderType.hashCode();
+		indicator.hashCode();
 	}
 
 	@Test
 	public void toStringTest() {
-		serviceProviderType.toString();
+		indicator.toString();
 	}
 
 }

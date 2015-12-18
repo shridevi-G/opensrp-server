@@ -179,4 +179,22 @@ public class MaleSterilizationRegisterEntryDTOTest {
 		MaleSterilizationFPDetailsDTO l=w.fpDetails();
 		assertEquals(l,a);
 		}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= maleSterilization.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		maleSterilization.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		maleSterilization.toString();
+	}
 }
