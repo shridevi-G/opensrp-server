@@ -13,28 +13,50 @@ public class VillagesDTOTest {
 	public void setUp(){
 		villagesdto = new VillagesDTO(null, null, null, null, null);
 	} 
+	
 	@Test
 	public void phcNameTest(){
 		String w= villagesdto.phcName();
 		String a=null;
 		assertEquals(w,a);
 	}
+	
 	@Test
 	public void subCenterTest(){
 		String w= villagesdto.subCenter();
 		String a=null;
 		assertEquals(w,a);
-		}
+	}
+	
 	@Test
 	public void villagesTest(){
 		List<String> w= villagesdto.villages();
 		String a=null;
 		assertEquals(w,a);
-		}
+	}
+	
 	@Test
 	public void phcIdentifierTest(){
 		String w= villagesdto.phcIdentifier();
 		String a=null;
 		assertEquals(w,a);
+	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= villagesdto.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		villagesdto.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		villagesdto.toString();
 	}
 }

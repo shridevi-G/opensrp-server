@@ -41,5 +41,23 @@ public class ReportDataDeleteRequestTest {
 		String s = c.dristhiEntityId();
 		assertEquals(s, "dristhiEntityId");
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= reportDataDeleteRequest.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		reportDataDeleteRequest.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		reportDataDeleteRequest.toString();
+	}
 
 }

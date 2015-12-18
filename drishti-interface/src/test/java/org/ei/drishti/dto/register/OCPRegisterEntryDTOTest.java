@@ -191,4 +191,22 @@ public class OCPRegisterEntryDTOTest {
 		assertEquals(s,a);
 	}
 	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= ocpregister.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		ocpregister.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		ocpregister.toString();
+	}
+	
 }

@@ -21,5 +21,23 @@ public class ReportingDataTest {
 		assertEquals(m, a);
 
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= reportingData.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		reportingData.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		reportingData.toString();
+	}
 
 }

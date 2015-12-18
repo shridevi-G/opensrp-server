@@ -1,5 +1,7 @@
 package org.ei.drishti.dto.register;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 import java.util.Map;
 
@@ -188,7 +190,9 @@ public class ANCRegisterEntryDTOTest {
 	@Test
 	public void equalsTest(){
 		Object o = null;
-		ancRegisterEntryDTO.equals(o);
+		boolean t= ancRegisterEntryDTO.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
 	}
 	
 	@Test

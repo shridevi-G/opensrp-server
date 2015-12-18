@@ -59,4 +59,22 @@ public class FormSubmissionDTOTest {
 		String a=null;
 		assertEquals(w,a);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= formsubmission.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		formsubmission.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		formsubmission.toString();
+	}
 }

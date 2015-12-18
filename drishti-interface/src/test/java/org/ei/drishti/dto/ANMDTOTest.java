@@ -11,22 +11,43 @@ public class ANMDTOTest {
 	public void setUp(){
 		anmdto = new ANMDTO(null, null, null);
 	}
+	
 	@Test
 	public void identifierTest(){
 		String w= anmdto.identifier();
 		String a=null;
 		assertEquals(w,a);
 	}
+	
 	@Test
 	public void nameTest(){
 		String w= anmdto.name();
 		String a=null;
 		assertEquals(w,a);
 	}
+	
 	@Test
 	public void locationTest(){
 		LocationDTO w= anmdto.location();
 		String a=null;
 		assertEquals(w,a);
+	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= anmdto.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		anmdto.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		anmdto.toString();
 	}
 }

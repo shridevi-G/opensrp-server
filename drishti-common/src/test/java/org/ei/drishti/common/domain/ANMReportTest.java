@@ -29,5 +29,23 @@ public class ANMReportTest {
 		String a = null;
 		assertEquals(m, a);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= anmreport.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		anmreport.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		anmreport.toString();
+	}
 
 }
