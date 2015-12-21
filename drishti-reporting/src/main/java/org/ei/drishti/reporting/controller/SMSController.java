@@ -51,7 +51,6 @@ public class SMSController {
             logger.error(format(
                     "SMS processing failed with exception {0}", e));
 
-        } catch (Exception e) { logger.error(format("Form submissions processing failed with exception {0}", e));
 
         }
     }
@@ -72,8 +71,7 @@ public class SMSController {
         } catch (Exception e) {
             logger.error(format(
                     "SMS processing failed with exception {0}", e));
-       } catch (Exception e) {  logger.error(format("Form submissions processing failed with exception {0}", e));
-
+       
         }
     }
 
@@ -92,7 +90,7 @@ public class SMSController {
 
         } catch (Exception e) {
             logger.error(format("SMS processing failed with exception {0}", e));
-        } catch (Exception e) { logger.error(format("Form submissions processing failed with exception {0}", e));
+       
 
         }
 
