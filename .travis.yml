@@ -13,9 +13,6 @@ script:
   - java -version
   - mvn --version
   - mvn test
-<<<<<<< HEAD
-
-=======
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
->>>>>>> 27e8f00104d97c36c47388d2b5eb221a9001dcc7
+
