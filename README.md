@@ -1,7 +1,8 @@
 # opensrp-server
 
-<a href="https://travis-ci.org/DhanushInfotech/opensrp-server"> <img src="https://api.travis-ci.org/DhanushInfotech/opensrp-server.svg?branch=doctor-plugin" >  </img> </a>
-<a href='https://coveralls.io/github/DhanushInfotech/opensrp-server?branch=doctor-plugin'><img src='https://coveralls.io/repos/DhanushInfotech/opensrp-server/badge.svg?branch=doctor-plugin&service=github'alt='Coverage Status' /></img></a>
+<a href="https://travis-ci.org/rakeshab/dristhi"> <img src="https://travis-ci.org/rakeshab/dristhi.svg?branch=doctor_module">  </img> </a>
+<a href='https://coveralls.io/github/rakeshab/dristhi?branch=doctor_module'><img src='https://coveralls.io/repos/rakeshab/dristhi/badge.svg?branch=doctor_module&service=github'alt='Coverage Status' /></img></a>
+
 
 
 <b>For a full server build one needs to configure the environment with technology components/programs to install OpenSRP.</b>
