@@ -1,62 +1,50 @@
 package org.ei.drishti.reporting.domain;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class ServiceProviderTypeTest {
 	
 	private ServiceProviderType serviceProviderType;
-	 @Before
-public void setUp(){
-		 serviceProviderType = new ServiceProviderType("sadf");
-}
-
-@Test
-public void idtest() throws Exception {
 	
-	serviceProviderType.id();
-
-}
-
-@Test
-public void parsetest() throws Exception {
+	@Before
+	public void setUp(){
+		String type = null;
+		serviceProviderType = new ServiceProviderType(type);
+	}
 	
-	serviceProviderType.parse("sadf");
-
-}
-
-@Test
-public void equalstest() throws Exception {
+	@Test
+	public void idTest(){
+		Integer s = null;
+		Integer w = serviceProviderType.id();
+		assertEquals(w,s);
+	}
 	
-	serviceProviderType.equals(null);
-
-}
-
-@Test
-public void hashCodetest() throws Exception {
+	@Test
+	public void typeTest(){
+		String s = null;
+		String w = serviceProviderType.type();
+		assertEquals(w,s);
+	}
 	
-	serviceProviderType.hashCode();
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= serviceProviderType.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
 
-}
+	@Test
+	public void hashCodeTest() {
+		serviceProviderType.hashCode();
+	}
 
-@Test
-public void toStringtest() throws Exception {
-	
-	serviceProviderType.toString();
-
-}
-@Test
-public void typetest() throws Exception {
-	
-	serviceProviderType.type();
-
-}
-
-@Test
-public void getTypetest() throws Exception {
-	
-	serviceProviderType.getType();
-
-}
+	@Test
+	public void toStringTest() {
+		serviceProviderType.toString();
+	}
 
 }

@@ -204,4 +204,22 @@ public class IUDRegisterEntryDTOTest {
 		IUDFPDetailsDTO l=w.fpDetails();
 		assertEquals(l,a);
 		}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= iudRegisterEntry.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		iudRegisterEntry.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		iudRegisterEntry.toString();
+	}
 }

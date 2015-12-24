@@ -171,5 +171,23 @@ public class CondomRegisterEntryDTOTest {
 		CondomFPDetailsDTO l=w.fpDetails();
 		assertEquals(l,a);
 	}
+	
+	@Test
+	public void equalsTest(){
+		Object o = null;
+		boolean t= condomRegister.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
+	}
+
+	@Test
+	public void hashCodeTest() {
+		condomRegister.hashCode();
+	}
+
+	@Test
+	public void toStringTest() {
+		condomRegister.toString();
+	}
 
 }

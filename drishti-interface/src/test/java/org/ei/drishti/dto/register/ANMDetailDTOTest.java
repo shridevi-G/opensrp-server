@@ -1,5 +1,7 @@
 package org.ei.drishti.dto.register;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +17,9 @@ public class ANMDetailDTOTest {
 	@Test
 	public void equalsTest(){
 		Object o = null;
-		anmDetailDTO.equals(o);
+		boolean t= anmDetailDTO.equals(o);
+		boolean x = false;
+		assertEquals(t,x);
 	}
 	
 	@Test

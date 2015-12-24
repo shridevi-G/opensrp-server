@@ -51,4 +51,22 @@ public void externalIDstest() throws Exception {
 	assertEquals(m,a);
 }
 
+@Test
+public void equalsTest(){
+	Object o = null;
+	boolean t= monthSummary.equals(o);
+	boolean x = false;
+	assertEquals(t,x);
+}
+
+@Test
+public void hashCodeTest() {
+	monthSummary.hashCode();
+}
+
+@Test
+public void toStringTest() {
+	monthSummary.toString();
+}
+
 }

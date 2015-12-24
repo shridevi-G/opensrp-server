@@ -4,10 +4,10 @@ import org.junit.Test;
 public class EconomicStatusTest {
 	
 	@Test
-	public void EconomicStatusTest(){
-		assertThat(EconomicStatus.APL.values());
-		assertThat(EconomicStatus.BPL.values());
-		assertThat(EconomicStatus.NOT_SPECIFIED.values());
+	public void economicStatusTest(){
+		assertThat(EconomicStatus.values());
+		assertThat(EconomicStatus.values());
+		assertThat(EconomicStatus.values());
 
 	}
 

@@ -1,28 +1,17 @@
-package org.ei.drishti.reporting.domain;
+/*package org.ei.drishti.reporting.domain;
 
 import org.junit.Before;
-import org.junit.Test;
 
 public class ServiceProviderTest {
 	
-	private ServiceProviderType serviceProviderType;
-	 @Before
-public void setUp(){
-		 serviceProviderType = new ServiceProviderType("sdaf");
-}
-
-@Test
-public void idtest() throws Exception {
+	private ServiceProvider serviceProvider;
 	
-	serviceProviderType.id();
-
-}
-
-@Test
-public void parsetest() throws Exception {
+	@Before
+	public void setUp(){
+		Integer id = null;
+		ServiceProviderType type = null;
+		serviceProvider = new ServiceProvider(id, serviceProvider, type);		
+	}
 	
-//	serviceProviderType.parse();
-
 }
-
-}
+*/
