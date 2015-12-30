@@ -23,9 +23,10 @@ private APPReport appReport;
 		Integer child_weight = null;
 		String other_date = null;
 		String visit_location = null;
+                String dob=null;
 		appReport = new APPReport(visitentityid, entityidec, patient_name, anm_id, activity, 
 				indicator, indicator_count, date, location, child_weight, other_date, 
-				visit_location);
+				visit_location,dob);
 	}
 	
 	@Test
