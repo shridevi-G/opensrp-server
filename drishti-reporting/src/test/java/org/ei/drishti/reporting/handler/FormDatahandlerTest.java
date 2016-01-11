@@ -61,10 +61,11 @@ public class FormDatahandlerTest {
 		JSONObject formte = new JSONObject();
 		JSONObject formt = new JSONObject();
 		JSONObject weight = new JSONObject();
-                JSONObject immunizationsGiven = new JSONObject();
+                //JSONObject immunizationsGiven = new JSONObject();
                 weight.put("weight", 5);
-		immunizationsGiven.put("immunizationsGiven", "bcg");       
-		instances.put(immunizationsGiven);
+                weight.put("immunizationsGiven", "bcg");
+		//immunizationsGiven.put("immunizationsGiven", "bcg");       
+		//instances.put(immunizationsGiven);
                 instances.put(weight);
                 
 		formt.put("instances", instances);
