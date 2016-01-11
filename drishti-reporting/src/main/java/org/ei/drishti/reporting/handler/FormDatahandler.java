@@ -46,9 +46,9 @@ public class FormDatahandler {
     	
     	this.dateUtil = dateUtil2;
     	this.ancVisitRepository = ancVisitRepository2;
-    	 this.anmService = anmService2;
+    	this.anmService = anmService2;
         this.smsController = smsController2;
-         this.visitService = visitService2;
+        this.visitService = visitService2;
       
 	}
 
@@ -116,16 +116,15 @@ public class FormDatahandler {
                         && jsonObject.getString("value") != null) ? jsonObject
                                 .getString("value") : "";
             }
-        }
+        }   
+        logger.info("invoke sms controller******" + phoneNumber);
+        smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "EC");
+        ancVisitRepository.ecinsert(entityId, phoneNumber);
         if(!currentMethod.equalsIgnoreCase("none")&& !currentMethod.equalsIgnoreCase("none_ps") && !currentMethod.equalsIgnoreCase("none_ss")
             &&!currentMethod.equalsIgnoreCase("dmpa_injectable")&& !currentMethod.equalsIgnoreCase("traditional_methods") && !currentMethod.equalsIgnoreCase("centchroman"))
         {
             ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "FP", currentMethod, numberOfCondomsSupplied, registrationDate, village, 0, "", "","");
         }
-        
-        logger.info("invoke sms controller******" + phoneNumber);
-        smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "EC");
-        ancVisitRepository.ecinsert(entityId, phoneNumber);
         
     
    }
@@ -371,7 +370,7 @@ public class FormDatahandler {
         ancVisitRepository.reportinsert(entityId, ecId, "", anmid, ttDose, "", 0, ttDate, village, 0, "", ttInjectionPlace,"");
     }
 
-    public void ancVisit(JSONObject dataObject, String visittype, String anmnumber) throws JSONException {
+    public void ancVisit(JSONObject dataObject, String visittype) throws JSONException {
         logger.info("anc_visit");
         String ecId = "";
         String newdate = "";
@@ -402,32 +401,35 @@ public class FormDatahandler {
         String datetime = collect(ancvisitdetails, on(ANCVisitDue.class).lmpdate()).get(0).toString();
         String visit = collect(ancvisitdetails, on(ANCVisitDue.class).visitno()).get(0).toString();
         int visitnum = Integer.parseInt(visit);
-        if (visitnum == 1) {
-            visittime = collect(visitconf, on(VisitConf.class).anc_visit2_from_week()).get(0).toString();
-            visitti = Integer.parseInt(visittime) * 7;
-            newdate = dateUtil.dateFormat(datetime, visitti);
-            visitno = 2;
-        }
-        if (visitnum == 2) {
-            visittime = collect(visitconf, on(VisitConf.class).anc_visit3_from_week()).get(0).toString();
-            logger.info("visit time interval:" + visittime);
-            visitti = Integer.parseInt(visittime) * 7;
-            newdate = dateUtil.dateFormat(datetime, visitti);
-            visitno = 3;
-        }
-        if (visitnum == 3) {
-            visittime = collect(visitconf, on(VisitConf.class).anc_visit4_from_week()).get(0).toString();
-            logger.info("visit time interval:" + visittime);
-            visitti = Integer.parseInt(visittime) * 7;
-            logger.info("visit time converted interval:" + visitti);
-            newdate = dateUtil.dateFormat(datetime, visitti);
-            logger.info("visit time converted time:" + newdate);
-            visitno = 4;
-        }
-        if (visitnum == 4) {
-            newdate = "";
-            logger.info("visit time converted time:" + newdate);
-            visitno = 5;
+        switch(visitnum){
+            case 1: visittime = collect(visitconf, on(VisitConf.class).anc_visit2_from_week()).get(0).toString();
+                visitti = Integer.parseInt(visittime) * 7;
+                newdate = dateUtil.dateFormat(datetime, visitti);
+                visitno = 2;
+                break;
+        
+            case 2:
+                visittime = collect(visitconf, on(VisitConf.class).anc_visit3_from_week()).get(0).toString();
+                logger.info("visit time interval:" + visittime);
+                visitti = Integer.parseInt(visittime) * 7;
+                newdate = dateUtil.dateFormat(datetime, visitti);
+                visitno = 3;
+                break;
+        
+            case 3:
+                visittime = collect(visitconf, on(VisitConf.class).anc_visit4_from_week()).get(0).toString();
+                logger.info("visit time interval:" + visittime);
+                visitti = Integer.parseInt(visittime) * 7;
+                logger.info("visit time converted interval:" + visitti);
+                newdate = dateUtil.dateFormat(datetime, visitti);
+                logger.info("visit time converted time:" + newdate);
+                visitno = 4;
+                break;
+            case 4:
+                newdate = "";
+                logger.info("visit time converted time:" + newdate);
+                visitno = 5;
+                break;
         }
         logger.info("new date" + newdate);
         String sid = collect(ancvisitdetails, on(ANCVisitDue.class).id()).get(0).toString();
@@ -448,6 +450,7 @@ public class FormDatahandler {
         String anmid = dataObject.getString("anmId");
         String entityId = dataObject.getString("entityId");
         logger.info("pnc registration");
+        String BreastfeedingStart="";
 
         JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
         JSONArray subfieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("sub_forms");
@@ -459,6 +462,7 @@ public class FormDatahandler {
         String chiweight=subfieldJsonArr.getJSONObject(0).getString("weight");
             child_weight=Integer.parseInt(chiweight);
         }
+        String immunizations=subfieldJsonArr.getJSONObject(0).getString("immunizationsGiven");
         logger.info("weight [0]:  " + child_weight);
 
         for (int i = 0; i < fieldJsonArray.length(); ++i) {
@@ -529,6 +533,16 @@ public class FormDatahandler {
                         && jsonObject.getString("value") != null ? jsonObject
                                 .getString("value") : "";
             }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("didBreastfeedingStart")) {
+
+                String didBreastfeedingStart = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+                if(didBreastfeedingStart.equalsIgnoreCase("yes")){
+                    immunizations=immunizations+",BF";
+                }
+            }        
         }
         if (visittype.equalsIgnoreCase("delivery_outcome")) {
 
@@ -538,16 +552,20 @@ public class FormDatahandler {
             String womphoneNumber = collect(ancvisitdetails, on(ANCVisitDue.class).patientnum()).get(0).toString();
             logger.info("wom phone number from db" + womphoneNumber);
             smsController.sendSMSPNC(womphoneNumber, regNumber, womenName, "PNC");
-            ancVisitRepository.reportinsert(entityId, ecId, wifeName, anmid, "pnc", deliveryType, 0, registrationDate, village, child_weight, "", deliveryPlace,child_dob);
+            ancVisitRepository.reportinsert(entityId, ecId, wifeName, anmid, "pnc", deliveryType, 0, registrationDate, village, 0, "", deliveryPlace,"");
+            ancVisitRepository.reportinsert(entityId, ecId, wifeName, anmid, "child", immunizations, 0, registrationDate, village, child_weight, "", "",child_dob);
+            
         }
         if (visittype.equalsIgnoreCase("pnc_registration_oa")) {
             logger.info("phonenumber" + phoneNumber + "*** wife name" + wifeName + "***reg Number" + regNumber);
             smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "PNC");
-            ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "pnc", deliveryType, 0, registrationDate, village, child_weight, "", deliveryPlace,child_dob);
+            ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "pnc", deliveryType, 0, registrationDate, village, 0, "", deliveryPlace,"");
+            ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "child", immunizations, 0, registrationDate, village, child_weight, "", "",child_dob);
+            
         }
     }
 
-    public void visitpoc(JSONObject dataObject, String visittype, String anmNumber) throws JSONException {
+    public void visitpoc(JSONObject dataObject, String visittype) throws JSONException {
         String entityidEC = "";
         String motherName = "";
         JSONArray fieldsJsonArray = dataObject.getJSONObject("formInstance")
@@ -608,6 +626,55 @@ public class FormDatahandler {
 
                 }
             }
+        }
+    }
+    
+    public void child_illness(JSONObject dataObject, String visittype)throws JSONException{
+        String entityId = dataObject.getString("entityId");
+        String anmid = dataObject.getString("anmId");
+        String childDisease="";
+        String motherName="";
+        String childDiseasereportDate="";
+        JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance").getJSONObject("form").getJSONArray("fields");
+        for (int i = 0; i < fieldJsonArray.length(); ++i) {
+            JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
+
+            if (jsonObject.has("name") && jsonObject.getString("name").equals("reportChildDisease")) {
+                childDisease = jsonObject.has("value") && jsonObject
+                        .getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("motherName")) {
+
+                motherName = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("childSigns")) {
+
+                childDisease = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+            if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("reportChildDiseaseDate")) {
+
+                childDiseasereportDate = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+                    if (jsonObject.has("name")
+                    && jsonObject.getString("name").equals("sickVisitDate")) {
+
+                childDiseasereportDate = jsonObject.has("value")
+                        && jsonObject.getString("value") != null ? jsonObject
+                                .getString("value") : "";
+            }
+        }
+        if(childDisease.equalsIgnoreCase("diarrhea")||childDisease.equalsIgnoreCase("diarrhea_dehydration")){
+        ancVisitRepository.reportinsert("", entityId, motherName, anmid, "child_illness", childDisease, 0, childDiseasereportDate, village, 0, "", "","");
         }
     }
 
@@ -696,14 +763,14 @@ public class FormDatahandler {
             }
             
         }
-        logger.info("immunizationgiven length"+immunizationsGiven.length());
+        //logger.info("immunizationgiven length"+immunizationsGiven.length());
         
 
         if (visittype.equalsIgnoreCase("child_registration_oa")) {
             logger.info("visittype: child_registration_oa");
             smsController.sendSMSChild(phoneNumber, motherName);
             ancVisitRepository.insert(entityId, phoneNumber, anmNumber, "child_Immunization", visitnumber, dateOfBirth, motherName, edd, anmid);
-            ancVisitRepository.reportinsert("", entityId, motherName, anmid, "child", immunizationsGiven, 0, registrationDate, village, birthWeight, "", "",dateOfBirth);
+            ancVisitRepository.reportinsert("", entityId, motherName, anmid, "child_oa", immunizationsGiven, 0, registrationDate, village, birthWeight, "", "",dateOfBirth);
         }
         if (visittype.equalsIgnoreCase("child_registration_ec")) {
             List ancvisitdetails = anmService.getPhoneNumber(entityId);
@@ -713,8 +780,7 @@ public class FormDatahandler {
             smsController.sendSMSChild(ptphoneNumber, wifeName);
             ancVisitRepository.insert(childId, ptphoneNumber, anmNumber, "child_Immunization", visitnumber, dateOfBirth, wifeName, edd, anmid);
             ancVisitRepository.reportinsert("", entityId, wifeName, anmid, "child", immunizationsGiven, 0, registrationDate, village, birthWeight,"" , "",dateOfBirth);
-
-        }
+         }
         
 
     }
@@ -773,6 +839,6 @@ public class FormDatahandler {
             }
             
         }
-        ancVisitRepository.reportinsert("", entityId, motherName, anmid, "child", immunizationsReceived, 0, registrationDate, village, 0, immunizationDate, immunizationPlace,"");
+        ancVisitRepository.reportinsert("", entityId, motherName, anmid, "child_immunization", immunizationsReceived, 0, registrationDate, village, 0, immunizationDate, immunizationPlace,"");
     }
 }
