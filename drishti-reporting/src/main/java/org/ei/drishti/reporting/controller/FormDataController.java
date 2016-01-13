@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package org.ei.drishti.reporting.controller;
+
 import java.util.Iterator;
 import java.util.List;
 import org.ei.drishti.common.util.DateUtil;
@@ -37,28 +38,25 @@ public class FormDataController {
     String phoneNumber = "";
     String ecId = "";
 
-   
     @Autowired
     public FormDataController(ANMService anmService2,
-			FormDatahandler formDataHandler2, SMSController smsController2,
-			DateUtil dateUtil2) {
-    	
-    	this.anmService = anmService2;
+            FormDatahandler formDataHandler2, SMSController smsController2,
+            DateUtil dateUtil2) {
+
+        this.anmService = anmService2;
         this.formDataHandler = formDataHandler2;
         this.smsController = smsController2;
         this.dateUtil = dateUtil2;
-        
+
     }
 
-	@RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/formdata")
+    @RequestMapping(headers = {"Accept=application/json"}, method = POST, value = "/formdata")
     public void formData(
             @RequestBody List<FormSubmissionDTO> formSubmissionsDTO) throws JSONException {
         logger.info("^^ form data into reporting controller****");
         Iterator<FormSubmissionDTO> itr = formSubmissionsDTO.iterator();
-        String visitno = "";
-        String date = "";
-        String newDate = "";
         String anmphoneNumber = "";
+        String phNumber = "";
 
         while (itr.hasNext()) {
             Object object = (Object) itr.next();
@@ -69,73 +67,57 @@ public class FormDataController {
             String user_id = dataObject.getString("anmId");
             anmphoneNumber = anmService.getanmPhoneNumber(user_id).get(0).toString();
             logger.info("value of anmphonenumber from db:" + anmphoneNumber);
-
-            if (visittype.equalsIgnoreCase("ec_registration")) {
-                logger.info("visit type: " + visittype);
-                formDataHandler.ecRegistration(dataObject, anmphoneNumber);
-
+            switch (visittype) {
+                case "ec_registration":
+                    formDataHandler.ecRegistration(dataObject, anmphoneNumber);
+                    break;
+                case "record_ecps":
+                    formDataHandler.recordECP(dataObject, anmphoneNumber);
+                    break;
+                case "ec_edit":
+                    formDataHandler.ecEdit(dataObject, anmphoneNumber);
+                    break;
+                case "anc_reg_edit_oa":
+                    formDataHandler.ancEdit(dataObject, anmphoneNumber);
+                    break;
+                case "child_immunizations":
+                    formDataHandler.childImmunization(dataObject, visittype);
+                    break;
+                case "child_registration_ec":
+                    formDataHandler.childRegistration(dataObject, visittype, anmphoneNumber);
+                    break;
+                case "child_registration_oa":
+                    formDataHandler.childRegistration(dataObject, visittype, anmphoneNumber);
+                    break;
+                case "anc_registration":
+                    formDataHandler.ancRegistration(dataObject, visittype, anmphoneNumber);
+                    break;
+                case "anc_registration_oa":
+                    formDataHandler.ancRegistration(dataObject, visittype, anmphoneNumber);
+                    break;
+                case "delivery_outcome":
+                    String phoneNumber = anmService.getanmPhoneNumber(user_id).toString();
+                    formDataHandler.pncRegistration(dataObject, visittype, phoneNumber);
+                    break;
+                case "pnc_registration_oa":
+                    String phoneNumber1 = anmService.getanmPhoneNumber(user_id).toString();
+                    formDataHandler.pncRegistration(dataObject, visittype, phoneNumber1);
+                    break;
+                case "anc_visit":
+                    formDataHandler.visitpoc(dataObject, visittype);
+                    formDataHandler.ancVisit(dataObject, visittype);
+                    break;
+                case "pnc_visit":
+                    formDataHandler.visitpoc(dataObject, visittype);
+                    break;
+                case "child_illness":
+                    formDataHandler.visitpoc(dataObject, visittype);
+                    formDataHandler.child_illness(dataObject, visittype);
+                    break;
+                case "tt":
+                    formDataHandler.ttData(dataObject, visittype);
+                    break;
             }
-            if (visittype.equalsIgnoreCase("record_ecps")) {
-                logger.info("visit type: " + visittype);
-                formDataHandler.recordECP(dataObject, anmphoneNumber);
-
-            }
-            if (visittype.equalsIgnoreCase("ec_edit")) {
-                logger.info("visit type" + visittype);
-
-                formDataHandler.ecEdit(dataObject, anmphoneNumber);
-
-            }
-            if (visittype.equalsIgnoreCase("anc_reg_edit_oa")) {
-                logger.info("visit type" + visittype);
-
-                formDataHandler.ancEdit(dataObject, anmphoneNumber);
-
-            }
-            if (visittype.equalsIgnoreCase("child_immunizations")) {
-                logger.info("visit type" + visittype);
-
-                formDataHandler.childImmunization(dataObject, visittype);
-
-            }
-
-            if (visittype.equalsIgnoreCase("child_registration_ec")
-                    || visittype.equalsIgnoreCase("child_registration_oa")) {
-                logger.info("visit type" + visittype);
-
-                formDataHandler.childRegistration(dataObject, visittype, anmphoneNumber);
-
-            }
-
-            if (visittype.equalsIgnoreCase("anc_registration")
-                    || visittype.equalsIgnoreCase("anc_registration_oa")) {
-
-                logger.info("visit type" + visittype);
-
-                formDataHandler.ancRegistration(dataObject, visittype, anmphoneNumber);
-
-            }
-
-            if (visittype.equalsIgnoreCase("delivery_outcome")
-                    || visittype.equalsIgnoreCase("pnc_registration_oa")) {
-
-                logger.info("visit type" + visittype);
-                String phoneNumber = anmService.getanmPhoneNumber(user_id).toString();
-                formDataHandler.pncRegistration(dataObject, visittype, phoneNumber);
-
-            }
-            if (visittype.equalsIgnoreCase("anc_visit")) {
-                formDataHandler.visitpoc(dataObject, visittype, phoneNumber);
-                formDataHandler.ancVisit(dataObject, visittype, anmphoneNumber);
-
-            }
-            if (visittype.equalsIgnoreCase("pnc_visit") || visittype.equalsIgnoreCase("child_illness")) {
-                formDataHandler.visitpoc(dataObject, visittype, phoneNumber);
-            }
-            if (visittype.equalsIgnoreCase("tt")){
-                formDataHandler.ttData(dataObject, visittype);
-            }
-
         }
     }
 

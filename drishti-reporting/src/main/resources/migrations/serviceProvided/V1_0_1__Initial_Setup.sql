@@ -137,3 +137,5 @@ CREATE TABLE report.visit_configuration (id SERIAL,anc_visit1_from_week integer,
 CONSTRAINT visit_configuration_pkey PRIMARY KEY (id));
 
 CREATE TABLE report.ec_reg (id SERIAL,entityid character varying(200) NOT NULL,phonenumber character varying(200) NOT NULL);
+
+CREATE TABLE report.app_reporting (id SERIAL,visitentityid character varying(50),entityidec character varying(50) NOT NULL,patient_name character varying(100) NOT NULL,anm_id character varying(25) NOT NULL,activity character varying(25) NOT NULL,indicators character varying(50),indicator_count integer,date character varying NOT NULL,location character varying(50) NOT NULL,child_weight integer,other_date character varying,visit_location character varying(50),dob character varying(200));
