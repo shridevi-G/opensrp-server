@@ -12,6 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import com.google.gson.JsonArray;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.ei.drishti.reporting.domain.ANCVisitDue;
 import org.ei.drishti.reporting.domain.ANMVillages;
 import org.ei.drishti.reporting.domain.EcRegDetails;
@@ -34,25 +38,36 @@ public class FormDatahandlerTest {
 	private DateUtil dateUtil;
 
 	private FormDatahandler formDatahandler;
+        
 
 	@Before
 	public void setUp() {
 		initMocks(this);
 		formDatahandler = new FormDatahandler(dateUtil, ancVisitRepository,anmService, smsController, visitService);
+                
 
 	}
 
 	public static JSONObject data() throws JSONException {
+             
+           // Map<String, String> instances= new HashMap<String,String>();
+            
 
 		JSONArray list = new JSONArray();
+                
 		JSONArray list1 = new JSONArray();
 		JSONArray li = new JSONArray();
 		JSONArray instances = new JSONArray();
 		JSONObject formte = new JSONObject();
 		JSONObject formt = new JSONObject();
 		JSONObject weight = new JSONObject();
-		weight.put("weight", 5);
-		instances.put(weight);
+                //JSONObject immunizationsGiven = new JSONObject();
+                weight.put("weight", 5);
+                weight.put("immunizationsGiven", "bcg");
+		//immunizationsGiven.put("immunizationsGiven", "bcg");       
+		//instances.put(immunizationsGiven);
+                instances.put(weight);
+                
 		formt.put("instances", instances);
 		formte.put("name", "ecId");
 		formte.put("value", "ecId");
@@ -166,7 +181,7 @@ public class FormDatahandlerTest {
 		VisitConf visitconf = new VisitConf("8", "10", "15", "20");
 		when(visitService.getVisitconf()).thenReturn(asList(visitconf));
 		when(dateUtil.dateFormat("datetime", 32)).thenReturn(("12/7/2015"));
-		formDatahandler.ancVisit(dataobject, "anc_visist", "32434");
+		formDatahandler.ancVisit(dataobject, "anc_visist");
 
 	}
 
@@ -176,11 +191,11 @@ public class FormDatahandlerTest {
 		JSONObject dataobject = data();
 		ANMVillages anmvillages = new ANMVillages("villages", "user_role","user_id", "name", "phone_number", 233, 324, 324, 324, 243,32432);
 		when(anmService.getANMVillages("anm123")).thenReturn(asList(anmvillages));
-		formDatahandler.visitpoc(dataobject, "Subcenter", "12645");
+		formDatahandler.visitpoc(dataobject, "Subcenter");
 		HealthCenter healthCenter = new HealthCenter(234234, "hospital_name","hospital_type", "hospital_address", "parent_hospital","villages", 324, 324, 324, 23234);
 		when(anmService.getPHCDetails(243)).thenReturn(asList(healthCenter));
-		formDatahandler.visitpoc(dataobject, "Subcenter", "12645");
-		formDatahandler.visitpoc(dataobject, "anc_visit", "1265");
+		formDatahandler.visitpoc(dataobject, "Subcenter");
+		formDatahandler.visitpoc(dataobject, "anc_visit");
 		ancVisitRepository.pocinsert(null, null, null, null, null, null, null);
 		verify(ancVisitRepository).pocinsert(null, null, null, null, null,null, null);
 
