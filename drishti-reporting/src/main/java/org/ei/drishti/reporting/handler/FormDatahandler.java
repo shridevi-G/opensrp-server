@@ -131,6 +131,151 @@ public class FormDatahandler {
         
     
    }
+    public void ecClose(JSONObject dataObject, String anmphoneNumber)
+			throws JSONException {
+		String entityId = dataObject.getString("entityId");
+		String anmid = dataObject.getString("anmId");
+		String submissionDate = "";
+		String otherMaternalDeathCause = "";
+		String otherCloseReason = "";
+		String maternalDeathCause = "";
+		String maternalDeathDate = "";
+		String isMaternalDeath = "";
+		String isECCloseConfirmed = "";
+		String isSterilizationDeath = "";
+		String sterilizationDeathDate = "";
+		String closeReason = "";
+		String death_of_wife = "";
+
+		JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance")
+				.getJSONObject("form").getJSONArray("fields");
+
+		for (int i = 0; i < fieldJsonArray.length(); i++) {
+
+			JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("phoneNumber")) {
+
+				phoneNumber = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("ecNumber")) {
+
+				regNumber = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"otherMaternalDeathCause")) {
+
+				otherMaternalDeathCause = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("otherCloseReason")) {
+
+				otherCloseReason = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name")
+							.equals("maternalDeathCause")) {
+
+				maternalDeathCause = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("maternalDeathDate")) {
+
+				maternalDeathDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name")
+							.equals("isECCloseConfirmed")) {
+
+				isECCloseConfirmed = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"sterilizationDeathDate")) {
+
+				sterilizationDeathDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"isSterilizationDeath")) {
+
+				isSterilizationDeath = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("isMaternalDeath")) {
+
+				isMaternalDeath = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("submissionDate")) {
+
+				submissionDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("village")) {
+
+				village = (jsonObject.has("value") && jsonObject
+						.getString("value") != null) ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("closeReason")) {
+
+				closeReason = (jsonObject.has("value") && jsonObject
+						.getString("value") != null) ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("death_of_wife")) {
+
+				death_of_wife = (jsonObject.has("value") && jsonObject
+						.getString("value") != null) ? jsonObject
+						.getString("value") : "";
+			}
+		}
+
+		if (closeReason.equalsIgnoreCase("death_of_wife")) {
+
+			ancVisitRepository.ecinsert("", entityId, "patient_name", anmid,
+					"Mortality", "EC", 0, submissionDate, village, 0, "", "",
+					"");
+
+		}
+
+	}
+
 
     public void recordECP(JSONObject dataObject, String anmPhoneNumber) throws JSONException {
         String entityId = dataObject.getString("entityId");
@@ -321,6 +466,194 @@ public class FormDatahandler {
         }
 
     }
+    public void ancClose(JSONObject dataObject, String visittype,
+			String anmNumber) throws JSONException {
+
+		String id = "";
+		String village = "";
+		String ecId = "";
+		String anmid = dataObject.getString("anmId");
+		String entityId = dataObject.getString("entityId");
+		String ancNumber = "";
+		String closeReason = "";
+		String numberOfAbortions = "";
+		String isMaternalDeath = "";
+		String numberOfSpontaneousAbortions = "";
+		String dateOfSpontaneousAbortion = "";
+		String maternalDeathDate = "";
+		String maternalDeathTrimester = "";
+		String submissionDate = "";
+		String isANCCloseConfirmed = "";
+		String rhInjectionGiven = "";
+		String otherMaternalDeathCause = "";
+		String maternalDeathCause = "";
+		String ecNumber = "";
+		String dateOfInducedAbortion = "";
+		String pat_name = "";
+		String yes = "";
+
+		JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance")
+				.getJSONObject("form").getJSONArray("fields");
+		Integer visitnumber = 1;
+
+		for (int i = 0; i < fieldJsonArray.length(); ++i) {
+			JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("id")) {
+				;
+				id = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("village")) {
+
+				village = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("ecId")) {
+
+				ecId = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("ancNumber")) {
+
+				regNumber = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("closeReason")) {
+
+				closeReason = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("numberOfAbortions")) {
+
+				numberOfAbortions = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("isMaternalDeath")) {
+
+				isMaternalDeath = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"numberOfSpontaneousAbortions")) {
+
+				numberOfSpontaneousAbortions = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"dateOfSpontaneousAbortion")) {
+
+				dateOfSpontaneousAbortion = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("maternalDeathDate")) {
+
+				maternalDeathDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"maternalDeathTrimester")) {
+
+				maternalDeathTrimester = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name")
+							.equals("maternalDeathCause")) {
+
+				maternalDeathCause = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("maternalDeathDate")) {
+
+				maternalDeathDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"dateOfInducedAbortion")) {
+
+				dateOfInducedAbortion = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"otherMaternalDeathCause")) {
+
+				otherMaternalDeathCause = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("rhInjectionGiven")) {
+
+				rhInjectionGiven = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("submissionDate")) {
+
+				submissionDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("yes")) {
+
+				yes = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+		}
+
+		if (closeReason.equalsIgnoreCase("death_of_wife")
+				|| isMaternalDeath.equalsIgnoreCase("yes")) {
+			ancVisitRepository.ancinsert("", entityId, "patient_name", anmid,
+					"Mortality", "anc_MaternalDeath", 0, submissionDate,
+					village, 0, "", "", "");
+
+		}
+
+	}
 
     public void ttData(JSONObject dataObject, String visittype) throws JSONException {
         String anmid = dataObject.getString("anmId");
@@ -574,6 +907,143 @@ public class FormDatahandler {
             
         }
     }
+    
+    
+    public void pncClose(JSONObject dataObject, String visittype,
+			String anmNumber) throws JSONException {
+		String anmid = dataObject.getString("anmId");
+		String entityId = dataObject.getString("entityId");
+		String id = "";
+		String village = "";
+		String pncNumber = "";
+		String closeReason = "";
+		String didWomanSurvive = "";
+		String deathDate = "";
+		String isMaternalDeath = "";
+		String maternalDeathCause = "";
+		String otherMaternalDeathCause = "";
+		String isPNCCloseConfirmed = "";
+		String submissionDate = "";
+		String death_of_mother = "";
+		String yes = "";
+
+		JSONArray fieldJsonArray = dataObject.getJSONObject("formInstance")
+				.getJSONObject("form").getJSONArray("fields");
+
+		for (int i = 0; i < fieldJsonArray.length(); ++i) {
+			JSONObject jsonObject = fieldJsonArray.getJSONObject(i);
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("id")) {
+
+				id = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("village")) {
+				village = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("pncNumber")) {
+
+				pncNumber = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("closeReason")) {
+
+				closeReason = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("didWomanSurvive")) {
+
+				didWomanSurvive = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("deathDate")) {
+
+				deathDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("isMaternalDeath")) {
+
+				isMaternalDeath = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name")
+							.equals("maternalDeathCause")) {
+
+				maternalDeathCause = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"otherMaternalDeathCause")) {
+
+				otherMaternalDeathCause = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals(
+							"isPNCCloseConfirmed")) {
+
+				isPNCCloseConfirmed = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("submissionDate")) {
+
+				submissionDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("death_of_mother")) {
+
+				death_of_mother = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("yes")) {
+
+				yes = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+
+		}
+
+		if (closeReason.equalsIgnoreCase("death_of_mother")
+				|| isMaternalDeath.equalsIgnoreCase("yes")) {
+			ancVisitRepository.pncinsert("", entityId, "patient_name", anmid,
+					"Mortality", "pnc_MaternalDeath", 0, submissionDate,
+					village, 0, "", "", "");
+
+		}
+
+	}
 
     public void visitpoc(JSONObject dataObject, String visittype) throws JSONException {
         String entityidEC = "";

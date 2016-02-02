@@ -77,6 +77,10 @@ public class FormDataController {
                 case "ec_edit":
                     formDataHandler.ecEdit(dataObject, anmphoneNumber);
                     break;
+                    
+                case "ec_close":
+    				formDataHandler.ecClose(dataObject, anmphoneNumber);
+    				break;
                 case "anc_reg_edit_oa":
                     formDataHandler.ancEdit(dataObject, anmphoneNumber);
                     break;
@@ -92,6 +96,15 @@ public class FormDataController {
                 case "anc_registration":
                     formDataHandler.ancRegistration(dataObject, visittype, anmphoneNumber);
                     break;
+                    
+                case "anc_close":
+    				formDataHandler.ancClose(dataObject, visittype, anmphoneNumber);
+    				break;
+
+    			case "pnc_close":
+				String anmNumber = null;
+				formDataHandler.pncClose(dataObject, visittype, anmNumber);
+    				break;
                 case "anc_registration_oa":
                     formDataHandler.ancRegistration(dataObject, visittype, anmphoneNumber);
                     break;
