@@ -4,10 +4,8 @@
  * and open the template in the editor.
  */
 package org.ei.drishti.reporting.controller;
-
 import java.util.Iterator;
 import java.util.List;
-
 import org.ei.drishti.common.util.DateUtil;
 import org.ei.drishti.dto.form.FormSubmissionDTO;
 import org.ei.drishti.reporting.handler.FormDatahandler;
@@ -22,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import static ch.lambdaj.Lambda.collect;
 import static ch.lambdaj.Lambda.on;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -51,7 +48,6 @@ public class FormDataController {
 		this.dateUtil = dateUtil2;
 
 	}
-
 	@RequestMapping(headers = { "Accept=application/json" }, method = POST, value = "/formdata")
 	public void formData(@RequestBody List<FormSubmissionDTO> formSubmissionsDTO)
 			throws JSONException {
@@ -70,7 +66,6 @@ public class FormDataController {
 			String user_id = dataObject.getString("anmId");
 			anmphoneNumber = anmService.getanmPhoneNumber(user_id).get(0)
 					.toString();
-
 			switch (visittype) {
 			case "ec_registration":
 				formDataHandler.ecRegistration(dataObject, anmphoneNumber);

@@ -16,7 +16,7 @@ private APPReport appReport;
 		String patient_name = null;
 		String anm_id = null;
 		String activity = null;
-		String indicator = null;
+		String indicators = null;
 		Integer indicator_count = null;
 		String date = null;
 		String location = null;
@@ -25,7 +25,7 @@ private APPReport appReport;
 		String visit_location = null;
                 String dob=null;
 		appReport = new APPReport(visitentityid, entityidec, patient_name, anm_id, activity, 
-				indicator, indicator_count, date, location, child_weight, other_date, 
+				indicators, indicator_count, date, location, child_weight, other_date, 
 				visit_location,dob);
 	}
 	
@@ -74,7 +74,7 @@ private APPReport appReport;
 	@Test
 	public void indicatorTest(){
 		String s = null;
-		String w = appReport.indicator();
+		String w = appReport.indicators();
 		assertEquals(w,s);
 	}
 	

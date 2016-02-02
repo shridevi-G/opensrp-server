@@ -12,6 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import com.google.gson.JsonArray;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.ei.drishti.reporting.domain.ANCVisitDue;
 import org.ei.drishti.reporting.domain.ANMVillages;
 import org.ei.drishti.reporting.domain.EcRegDetails;
@@ -34,25 +38,36 @@ public class FormDatahandlerTest {
 	private DateUtil dateUtil;
 
 	private FormDatahandler formDatahandler;
+        
 
 	@Before
 	public void setUp() {
 		initMocks(this);
 		formDatahandler = new FormDatahandler(dateUtil, ancVisitRepository,anmService, smsController, visitService);
+                
 
 	}
 
 	public static JSONObject data() throws JSONException {
+             
+           // Map<String, String> instances= new HashMap<String,String>();
+            
 
 		JSONArray list = new JSONArray();
+                
 		JSONArray list1 = new JSONArray();
 		JSONArray li = new JSONArray();
 		JSONArray instances = new JSONArray();
 		JSONObject formte = new JSONObject();
 		JSONObject formt = new JSONObject();
 		JSONObject weight = new JSONObject();
-		weight.put("weight", 5);
-		instances.put(weight);
+                //JSONObject immunizationsGiven = new JSONObject();
+                weight.put("weight", 5);
+                weight.put("immunizationsGiven", "bcg");
+		//immunizationsGiven.put("immunizationsGiven", "bcg");       
+		//instances.put(immunizationsGiven);
+                instances.put(weight);
+                
 		formt.put("instances", instances);
 		formte.put("name", "ecId");
 		formte.put("value", "ecId");
