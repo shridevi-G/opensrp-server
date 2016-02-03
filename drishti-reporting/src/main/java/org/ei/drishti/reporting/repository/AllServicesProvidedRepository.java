@@ -148,4 +148,16 @@ public class AllServicesProvidedRepository {
 				date, location, child_weight, other_date, visit_location, dob));
 
 	}
+	
+	  public void anctopncsave(String visitentityid, String entityidec,
+				String patient_name, String anm_id, String activity,
+				String indicator, Integer indicator_count, String date,
+				String location, Integer child_weight, String other_date,
+				String visit_location, String dob) {
+
+			dataAccessTemplate.save(new APPReport(visitentityid, entityidec,
+					patient_name, anm_id, activity, indicator, indicator_count,
+					date, location, child_weight, other_date, visit_location, dob));
+
+		}
 }
