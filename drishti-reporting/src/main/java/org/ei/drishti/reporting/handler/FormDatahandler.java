@@ -785,6 +785,9 @@ public class FormDatahandler {
         Integer child_weight=0;
         String anmid = dataObject.getString("anmId");
         String entityId = dataObject.getString("entityId");
+        String didMotherSurvive="";
+        String yes="";
+        String submissionDate="";
         logger.info("pnc registration");
         String BreastfeedingStart="";
 
@@ -876,6 +879,29 @@ public class FormDatahandler {
                         && jsonObject.getString("value") != null ? jsonObject
                                 .getString("value") : "";
             }
+            
+            if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("didMotherSurvive")) {
+
+				didMotherSurvive = (jsonObject.has("value") && jsonObject
+						.getString("value") != null) ? jsonObject
+						.getString("value") : "";
+			}
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("yes")) {
+
+				yes = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
+			
+			if (jsonObject.has("name")
+					&& jsonObject.getString("name").equals("submissionDate")) {
+
+				submissionDate = jsonObject.has("value")
+						&& jsonObject.getString("value") != null ? jsonObject
+						.getString("value") : "";
+			}
             if (jsonObject.has("name")
                     && jsonObject.getString("name").equals("didBreastfeedingStart")) {
 
@@ -887,18 +913,31 @@ public class FormDatahandler {
                 }
             }        
         }
-        if (visittype.equalsIgnoreCase("delivery_outcome")) {
+        if (visittype.equalsIgnoreCase("delivery_outcome") ||
 
-            List ancvisitdetails = visitService.getVisitDue(ecId);
-            String womenName = collect(ancvisitdetails, on(ANCVisitDue.class).womenName()).get(0).toString();
-            logger.info("women Name from db" + womenName);
-            String womphoneNumber = collect(ancvisitdetails, on(ANCVisitDue.class).patientnum()).get(0).toString();
-            logger.info("wom phone number from db" + womphoneNumber);
-            smsController.sendSMSPNC(womphoneNumber, regNumber, womenName, "PNC");
-            ancVisitRepository.reportinsert(entityId, ecId, womenName, anmid, "pnc", deliveryType, 0, registrationDate, village, 0, "", deliveryPlace,child_dob);
-            ancVisitRepository.reportinsert(entityId, ecId, womenName, anmid, "child", immunizations, 0, registrationDate, village, child_weight, "", "",child_dob);
-            
-        }
+        		(didMotherSurvive.equalsIgnoreCase("yes"))) {
+
+        			List ancvisitdetails = visitService.getVisitDue(ecId);
+        			String womenName = collect(ancvisitdetails,
+        					on(ANCVisitDue.class).womenName()).get(0).toString();
+        			logger.info("women Name from db" + womenName);
+        			String womphoneNumber = collect(ancvisitdetails,
+        					on(ANCVisitDue.class).patientnum()).get(0).toString();
+        			logger.info("wom phone number from db" + womphoneNumber);
+        			smsController.sendSMSPNC(womphoneNumber, regNumber, womenName,
+        					"PNC");
+        			ancVisitRepository.reportinsert(entityId, ecId, womenName, anmid,
+        					"pnc", deliveryType, 0, registrationDate, village, 0, "",
+        					deliveryPlace, child_dob);
+        			ancVisitRepository.reportinsert(entityId, ecId, womenName, anmid,
+        					"child", immunizations, 0, registrationDate, village,
+        					child_weight, "", "", child_dob);
+
+        			ancVisitRepository.anctopncinsert("", entityId, "patient_name",
+        					anmid, "Mortality", "anctopnc_MaternalDeath", 0,
+        					submissionDate, village, 0, "", "", "");
+
+        		}
         if (visittype.equalsIgnoreCase("pnc_registration_oa")) {
             logger.info("phonenumber" + phoneNumber + "*** wife name" + wifeName + "***reg Number" + regNumber);
             smsController.sendSMSEC(phoneNumber, regNumber, wifeName, "PNC");
