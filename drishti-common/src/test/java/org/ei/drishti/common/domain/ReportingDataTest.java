@@ -12,6 +12,7 @@ public class ReportingDataTest {
 	@Before
 	public void setUp() {
 		reportingData = new ReportingData(null, null);
+		reportingData = new ReportingData(null);
 	}
 
 	@Test
