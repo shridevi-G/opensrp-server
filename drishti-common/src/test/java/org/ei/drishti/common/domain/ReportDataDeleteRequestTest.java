@@ -12,6 +12,8 @@ public class ReportDataDeleteRequestTest {
 	@Before
 	public void setUp() {
 		reportDataDeleteRequest = new ReportDataDeleteRequest();
+		String type = null;
+		reportDataDeleteRequest = new ReportDataDeleteRequest(type);
 	}
 
 	@Test
