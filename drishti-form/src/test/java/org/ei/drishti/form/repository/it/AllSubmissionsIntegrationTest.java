@@ -21,6 +21,7 @@ public class AllSubmissionsIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
+    	
         formSubmissions.removeAll();
     }
 
