@@ -86,9 +86,9 @@ public class ReportMonthTest {
     	assertThat(reportMonth.startDateOfReportingYear());
     }
 
+
 	private void assertThat(Date date) {
 		// TODO Auto-generated method stub
 		
-	}
-	
+	}	
 }

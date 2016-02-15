@@ -80,4 +80,6 @@ public class PNCVisitDTOTest {
 		List<Map<String, String>> childrenDetails = null;
 		pncVisitDTO.withChildrenDetails(childrenDetails);
 	}
+
 }
+
