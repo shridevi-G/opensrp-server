@@ -6,6 +6,7 @@ public class AllConstantsTest {
 	private AllConstants allConstants;
 	 @Before
 	    public void setUp(){
+		 
 		 allConstants = new AllConstants();
 	    }
 
