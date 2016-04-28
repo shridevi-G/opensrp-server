@@ -51,8 +51,8 @@ public class APPReport {
     @Column(name = "activity")
     private String activity;
 
-    @Column(name = "indicator")
-    private String indicator;
+    @Column(name = "indicators")
+    private String indicators;
 
     @Column(name = "indicator_count")
     private Integer indicator_count;
@@ -71,23 +71,27 @@ public class APPReport {
 
     @Column(name = "visit_location")
     private String visit_location;
+    
+    @Column(name = "dob")
+    private String dob;
 
     private APPReport() {
     }
 
-    public APPReport(String visitentityid, String entityidec, String patient_name, String anm_id, String activity, String indicator, Integer indicator_count, String date, String location, Integer child_weight, String other_date, String visit_location) {
+    public APPReport(String visitentityid, String entityidec, String patient_name, String anm_id, String activity, String indicators, Integer indicator_count, String date, String location, Integer child_weight, String other_date, String visit_location, String dob) {
         this.visitentityid = visitentityid;
         this.entityidec = entityidec;
         this.patient_name = patient_name;
         this.anm_id = anm_id;
         this.activity = activity;
-        this.indicator = indicator;
+        this.indicators = indicators;
         this.indicator_count = indicator_count;
         this.date = date;
         this.location = location;
         this.child_weight = child_weight;
         this.other_date = other_date;
         this.visit_location = visit_location;
+        this.dob=dob;
 
     }
 
@@ -116,8 +120,8 @@ public class APPReport {
         return activity;
     }
 
-    public String indicator() {
-        return indicator;
+    public String indicators() {
+        return indicators;
     }
 
 
@@ -145,6 +149,9 @@ public class APPReport {
 
     public String visit_location() {
         return visit_location;
+    }
+    public String dob() {
+        return dob;
     }
 
     @Override

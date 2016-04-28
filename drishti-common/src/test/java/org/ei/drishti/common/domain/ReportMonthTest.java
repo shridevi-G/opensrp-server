@@ -1,10 +1,10 @@
 package org.ei.drishti.common.domain;
-
 import org.ei.drishti.common.util.DateUtil;
 import org.joda.time.LocalDate;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+import java.util.Date;
 
 public class ReportMonthTest {
 
@@ -34,9 +34,7 @@ public class ReportMonthTest {
         assertEquals(LocalDate.parse("2012-01-26"), reportMonth.startDateOfNextReportingMonth(LocalDate.parse("2012-01-01")));
         assertEquals(LocalDate.parse("2012-02-26"), reportMonth.startDateOfNextReportingMonth(LocalDate.parse("2012-01-26")));
         assertEquals(LocalDate.parse("2012-02-26"), reportMonth.startDateOfNextReportingMonth(LocalDate.parse("2012-01-27")));
-
         assertEquals(LocalDate.parse("2011-12-26"), reportMonth.startDateOfNextReportingMonth(LocalDate.parse("2011-11-28")));
-
         assertEquals(LocalDate.parse("2011-12-26"), reportMonth.startDateOfNextReportingMonth(LocalDate.parse("2011-12-25")));
         assertEquals(LocalDate.parse("2012-01-26"), reportMonth.startDateOfNextReportingMonth(LocalDate.parse("2011-12-26")));
         assertEquals(LocalDate.parse("2012-01-26"), reportMonth.startDateOfNextReportingMonth(LocalDate.parse("2011-12-27")));
@@ -53,9 +51,7 @@ public class ReportMonthTest {
     public void shouldCalculateEndDateOfCurrentReportMonth() throws Exception {
         assertEquals(LocalDate.parse("2013-01-25"), reportMonth.endOfCurrentReportMonth(LocalDate.parse("2012-12-26")));
         assertEquals(LocalDate.parse("2013-01-25"), reportMonth.endOfCurrentReportMonth(LocalDate.parse("2012-12-30")));
-
         assertEquals(LocalDate.parse("2013-01-25"), reportMonth.endOfCurrentReportMonth(LocalDate.parse("2013-01-01")));
-
         assertEquals(LocalDate.parse("2013-02-25"), reportMonth.endOfCurrentReportMonth(LocalDate.parse("2013-01-26")));
         assertEquals(LocalDate.parse("2013-01-25"), reportMonth.endOfCurrentReportMonth(LocalDate.parse("2013-01-25")));
     }
@@ -68,7 +64,6 @@ public class ReportMonthTest {
         assertTrue(reportMonth.isDateWithinCurrentReportMonth(LocalDate.parse("2013-02-25")));
         assertFalse(reportMonth.isDateWithinCurrentReportMonth(LocalDate.parse("2013-01-25")));
         assertFalse(reportMonth.isDateWithinCurrentReportMonth(LocalDate.parse("2013-02-26")));
-
         DateUtil.fakeIt(LocalDate.parse("2012-12-26"));
         assertTrue(reportMonth.isDateWithinCurrentReportMonth(LocalDate.parse("2013-01-01")));
         assertTrue(reportMonth.isDateWithinCurrentReportMonth(LocalDate.parse("2013-01-25")));
@@ -82,9 +77,18 @@ public class ReportMonthTest {
         assertTrue(reportMonth.areDatesBelongToSameReportingMonth(LocalDate.parse("2013-02-25"), LocalDate.parse("2013-02-25")));
         assertTrue(reportMonth.areDatesBelongToSameReportingMonth(LocalDate.parse("2012-12-26"), LocalDate.parse("2013-01-01")));
         assertTrue(reportMonth.areDatesBelongToSameReportingMonth(LocalDate.parse("2012-12-26"), LocalDate.parse("2013-01-25")));
-
         assertFalse(reportMonth.areDatesBelongToSameReportingMonth(LocalDate.parse("2013-01-25"), LocalDate.parse("2013-01-26")));
         assertFalse(reportMonth.areDatesBelongToSameReportingMonth(LocalDate.parse("2013-01-26"), LocalDate.parse("2013-02-26")));
     }
-}
+    
+    @Test
+    public void startDateOfReportingYear_Test(){
+    	assertThat(reportMonth.startDateOfReportingYear());
+    }
 
+
+	private void assertThat(Date date) {
+		// TODO Auto-generated method stub
+		
+	}	
+}

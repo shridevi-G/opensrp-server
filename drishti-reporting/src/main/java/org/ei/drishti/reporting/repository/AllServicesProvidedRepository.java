@@ -97,6 +97,31 @@ public class AllServicesProvidedRepository {
         logger.info(" visit date: " + objectToUpdate);
         logger.info(" visit date2: ");
     }
+    public void pocvisitupdate(int rid, String visittype, String visitentityid, String entityidec, String anmid, String phc, String timestamp, String wifename) {
+    	Integer id= rid;
+    	POC_Table objectToUpdate = (POC_Table) dataAccessTemplate.get(POC_Table.class, id);
+    	java.util.Date date = new java.util.Date();
+        Timestamp timestamp1 = new Timestamp(date.getTime());
+    	
+        objectToUpdate.setvisittype(visittype);
+        objectToUpdate.setanmid(anmid);
+        objectToUpdate.setphc(phc);
+        objectToUpdate.settimestamp(timestamp1);
+        objectToUpdate.setwifename(wifename);
+
+        dataAccessTemplate.saveOrUpdate(objectToUpdate);
+        logger.info(" POC Update: " + objectToUpdate);
+     
+    }
+    
+
+public void pocDelete(List pocDetails) {
+	
+
+    dataAccessTemplate.deleteAll(pocDetails);
+    logger.info(" POC Update: " + pocDetails);
+ 
+}
 
     public void pocsave(String visittype, String visitentityid, String entityidec, String anmid, String phc, String timestamp, String wifename) {
         logger.info("####### pocsave method invoked$$$$$" + phc);
@@ -107,9 +132,57 @@ public class AllServicesProvidedRepository {
         dataAccessTemplate.save(new POC_Table(visitentityid, entityidec, anmid, "1", " ", " ", visittype, phc, " ", " ", timestamp1, wifename));
 
     }
-    public void reportsave(String visitentityid, String entityidec, String patient_name, String anm_id, String activity, String indicator, Integer indicator_count, String date, String location, Integer child_weight, String other_date, String visit_location) {
+    public void reportsave(String visitentityid, String entityidec, String patient_name, String anm_id, String activity, String indicator, Integer indicator_count, String date, String location, Integer child_weight, String other_date, String visit_location,String dob) {
         logger.info("####### anc report save method invoked$$$$$");
-        dataAccessTemplate.save(new APPReport(visitentityid,entityidec, patient_name, anm_id, activity, indicator, indicator_count, date, location, child_weight,other_date,visit_location));
+        dataAccessTemplate.save(new APPReport(visitentityid,entityidec, patient_name, anm_id, activity, indicator, indicator_count, date, location, child_weight,other_date,visit_location,dob));
         logger.info("report data save done");
     }
+    
+    public void ecsave(String visitentityid, String entityidec,
+			String patient_name, String anm_id, String activity,
+			String indicator, Integer indicator_count, String date,
+			String location, Integer child_weight, String other_date,
+			String visit_location, String dob) {
+
+		dataAccessTemplate.save(new APPReport(visitentityid, entityidec,
+				patient_name, anm_id, activity, indicator, indicator_count,
+				date, location, child_weight, other_date, visit_location, dob));
+
+	}
+
+	public void ancsave(String visitentityid, String entityidec,
+			String patient_name, String anm_id, String activity,
+			String indicator, Integer indicator_count, String date,
+			String location, Integer child_weight, String other_date,
+			String visit_location, String dob) {
+
+		dataAccessTemplate.save(new APPReport(visitentityid, entityidec,
+				patient_name, anm_id, activity, indicator, indicator_count,
+				date, location, child_weight, other_date, visit_location, dob));
+
+	}
+
+	public void pncsave(String visitentityid, String entityidec,
+			String patient_name, String anm_id, String activity,
+			String indicator, Integer indicator_count, String date,
+			String location, Integer child_weight, String other_date,
+			String visit_location, String dob) {
+
+		dataAccessTemplate.save(new APPReport(visitentityid, entityidec,
+				patient_name, anm_id, activity, indicator, indicator_count,
+				date, location, child_weight, other_date, visit_location, dob));
+
+	}
+	
+	  public void anctopncsave(String visitentityid, String entityidec,
+				String patient_name, String anm_id, String activity,
+				String indicator, Integer indicator_count, String date,
+				String location, Integer child_weight, String other_date,
+				String visit_location, String dob) {
+
+			dataAccessTemplate.save(new APPReport(visitentityid, entityidec,
+					patient_name, anm_id, activity, indicator, indicator_count,
+					date, location, child_weight, other_date, visit_location, dob));
+
+		}
 }
